@@ -77,7 +77,7 @@ textarea{ min-height:180px; resize:vertical; }
 .modal-box .modal-sub{ text-align:center; color:#6b7280; font-size:15px; margin-bottom:28px; }
 .modal-close{ position:absolute; top:16px; right:20px; font-size:22px; cursor:pointer; color:#9ca3af; background:none; border:none; line-height:1; }
 .modal-close:hover{ color:#111827; }
-.modal-plans{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.modal-plans{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
 .modal-plan{ border:1px solid #e5e7eb; border-radius:14px; padding:20px 16px; text-align:center; }
 .modal-plan.best{ border:2px solid #2563eb; background:#eff6ff; }
 .modal-plan .mp-name{ font-weight:700; font-size:15px; }
@@ -404,7 +404,7 @@ function moveComp(dir){goComp((compIndex+dir+COMP_TOTAL)%COMP_TOTAL);}
 const compWrap=document.getElementById("compCarouselWrap");
 compWrap.addEventListener("mouseenter",()=>{compPaused=true;compPauseTime=performance.now();cancelAnimationFrame(compProgressRAF);});
 compWrap.addEventListener("mouseleave",()=>{if(compPauseTime!==null){compProgressStart+=performance.now()-compPauseTime;compPauseTime=null;}compPaused=false;compProgressRAF=requestAnimationFrame(compTick);});
-buildCompDots();compProgressStart=performance.now();compProgressRAF=requestAnimationFrame(compTick);
+buildCompDots();
 
 const demos=[
   {label:"React dev · SaaS dashboard",job:"Looking for a React developer to build an analytics dashboard for our B2B SaaS. Needs real-time charts (Chart.js), user role management, and Stripe billing portal integration. Stack is Next.js + Supabase. Figma designs are ready. Budget $2,500-4,000. Need to start ASAP, ~3 weeks timeline.",proposal:"Figma designs already ready is a green light. No discovery phase needed, I can start building immediately. Four Next.js + Supabase dashboards shipped this year, so role management and real-time charts are straightforward. Stripe billing portal is usually where projects stall (webhook edge cases), so I'd tackle that in week 1 while it's still easy to test. Realistic timeline: 18 working days. Happy to do a paid 2-day sprint on the auth layer first so you can see my code quality before committing to the full scope."},
