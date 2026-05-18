@@ -16,6 +16,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "wnu1bp2ige");
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{ margin:0; padding:0; box-sizing:border-box; }
 body{ font-family:Arial, sans-serif; background:#f8fafc; color:#111827; }
@@ -381,6 +382,12 @@ Launch week — use code <code>LAUNCH50</code> for 50% off Pro · first 20 custo
 <footer>2026 PropAI · ActOnIT · <a href="/login.html?tab=login" style="color:#6b7280;">Login</a> · <a href="#" onclick="openPaywall('footer_pricing');return false;" style="color:#6b7280;">Pricing</a></footer>
 
 <script>
+const sbClient = window.supabase.createClient(
+  "https://xogedcqykxdzmllmptks.supabase.co",
+  "sb_publishable_EQN-MT7Rd7ghL0rpSF96Dw_Z7ZAih5U",
+  { auth:{ persistSession:true, autoRefreshToken:true, storageKey:"propai_session" } }
+);
+
 const FREE_LIMIT=2;let lastProposal="";let followUpDays="3";
 
 function trackEvent(name,data){
@@ -448,28 +455,38 @@ document.getElementById("jobDesc").addEventListener("focus",()=>{if(demoActive)s
 
 function el(id){return document.getElementById(id);}
 
-function checkLoginState(){
-const email=localStorage.getItem("propai_email");
-if(email){
-el("loginLink").style.display="none";
-el("signupLink").style.display="none";
-el("dashLink").style.display="inline-flex";
-if(el("heroLogin"))el("heroLogin").style.display="none";
-if(el("heroSignup"))el("heroSignup").style.display="none";
-if(el("heroDash"))el("heroDash").style.display="inline-block";
-if(el("welcomeBadge"))el("welcomeBadge").innerText="Welcome back, "+email;
-el("topBanner").style.display="block";
-trackEvent("returning_user");
-} else {
-el("loginLink").style.display="inline-flex";
-el("signupLink").style.display="inline-flex";
-el("dashLink").style.display="none";
-if(el("heroLogin"))el("heroLogin").style.display="inline-block";
-if(el("heroSignup"))el("heroSignup").style.display="inline-block";
-if(el("heroDash"))el("heroDash").style.display="none";
-if(el("welcomeBadge"))el("welcomeBadge").innerText="";
-el("topBanner").style.display="none";
-}
+async function checkLoginState(){
+  try {
+    const { data:{ session } } = await sbClient.auth.getSession();
+    if(session && session.user){
+      const email = session.user.email;
+      localStorage.setItem("propai_email", email);
+      el("loginLink").style.display="none";
+      el("signupLink").style.display="none";
+      el("dashLink").style.display="inline-flex";
+      if(el("heroLogin"))el("heroLogin").style.display="none";
+      if(el("heroSignup"))el("heroSignup").style.display="none";
+      if(el("heroDash"))el("heroDash").style.display="inline-block";
+      if(el("welcomeBadge"))el("welcomeBadge").innerText="Welcome back, "+email;
+      el("topBanner").style.display="block";
+      trackEvent("returning_user");
+    } else {
+      localStorage.removeItem("propai_email");
+      el("loginLink").style.display="inline-flex";
+      el("signupLink").style.display="inline-flex";
+      el("dashLink").style.display="none";
+      if(el("heroLogin"))el("heroLogin").style.display="inline-block";
+      if(el("heroSignup"))el("heroSignup").style.display="inline-block";
+      if(el("heroDash"))el("heroDash").style.display="none";
+      if(el("welcomeBadge"))el("welcomeBadge").innerText="";
+      el("topBanner").style.display="none";
+    }
+  } catch(e) {
+    el("loginLink").style.display="inline-flex";
+    el("signupLink").style.display="inline-flex";
+    el("dashLink").style.display="none";
+    el("topBanner").style.display="none";
+  }
 }
 
 function checkSuccessBanner(){const params=new URLSearchParams(window.location.search);if(params.get("success")==="1"){el("successBanner").style.display="block";history.replaceState(null,"","/");trackEvent("payment_success");}}
@@ -610,9 +627,8 @@ if(data.url){window.location=data.url;}
 else{alert(data.error||"Could not start checkout. Please try again.");}
 }
 
-checkLoginState();
+checkLoginState().then(() => checkFreeWarning());
 checkSuccessBanner();
-checkFreeWarning();
 </script>
 </body>
 </html>
