@@ -1,6 +1,6 @@
 export const config = { runtime: "edge" };
 
-const FREE_LIMIT = 3;
+const FREE_LIMIT = 2;
 
 function sanitize(str) {
   if (!str || typeof str !== "string") return "";

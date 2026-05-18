@@ -190,7 +190,6 @@ footer{ padding:30px; text-align:center; color:#6b7280; margin-top:40px; border-
     <a href="/login.html?tab=login" id="loginLink"><button class="btn btn-light">Log in</button></a>
     <a href="/login.html" id="signupLink"><button class="btn btn-success">Sign up free</button></a>
     <a href="/dashboard.html" id="dashLink" style="display:none;"><button class="btn btn-success">Dashboard</button></a>
-    <button class="btn btn-primary" onclick="openPaywall('nav_upgrade')">Upgrade</button>
   </div>
 </nav>
 
@@ -199,41 +198,101 @@ footer{ padding:30px; text-align:center; color:#6b7280; margin-top:40px; border-
 <div class="modal-overlay" id="paywallModal">
   <div class="modal-box">
     <button class="modal-close" onclick="closePaywall()">x</button>
-    <h2 id="paywallTitle">Unlock unlimited proposals</h2>
-    <p class="modal-sub" id="paywallSub">Credits never expire. Pro is 50% off this week with code <strong>LAUNCH50</strong>.</p>
+    <h2 id="paywallTitle">Choose your plan</h2>
+    <p class="modal-sub" id="paywallSub">Start free, upgrade when you need more.</p>
     <div class="modal-plans">
-      <div class="modal-plan"><div class="mp-name">Starter</div><div class="mp-price">9</div><div class="mp-credits">10 Credits</div><div class="mp-desc">Quick top-up. Credits never expire. Best for occasional applications.</div><button class="btn btn-primary full" onclick="buyPlan('starter')">Buy Starter</button></div>
-      <div class="modal-plan"><div class="mp-name">Pro</div><div class="mp-price">24</div><div class="mp-credits">50 Credits</div><div class="mp-desc">Tone control, platform targeting, revision mode, follow-up generator.</div><button class="btn btn-primary full" onclick="buyPlan('pro')">Buy Pro</button></div>
-      <div class="modal-plan best"><div class="mp-name">Unlimited</div><div class="mp-price" id="unlimitedPrice">35<span style="font-size:15px;">/mo</span></div><div class="mp-credits">Unlimited proposals</div><div class="mp-desc">For active freelancers. Apply to every job, every day. Cancel anytime.</div>
-      <div class="plan-toggle"><button class="active" id="ulMonthlyBtn" onclick="setUnlimitedPlan('monthly')">Monthly</button><button id="ulAnnualBtn" onclick="setUnlimitedPlan('annual')">Annual<span class="plan-save">-29%</span></button></div>
-      <button class="btn btn-primary full" id="ulBuyBtn" onclick="buyPlan('unlimited')" style="margin-top:10px;">Buy Unlimited</button></div>
+      <div class="modal-plan"><div class="mp-name">Free</div><div class="mp-price">0</div><div class="mp-credits">50 proposals/week</div><div class="mp-desc">Perfect for getting started. No credit card required.</div><button class="btn btn-primary full" onclick="window.location.href='/login.html'">Sign up free</button></div>
+      <div class="modal-plan best"><div class="mp-name">Plus</div><div class="mp-price">5</div><div class="mp-credits">100 proposals/week</div><div class="mp-desc">Early access features + direct support from founder.</div><button class="btn btn-primary full" onclick="buyPlan('plus')">Get Plus - €5</button></div>
     </div>
-    <p style="text-align:center;margin-top:18px;font-size:13px;color:#6b7280;">30-day money-back guarantee. No questions asked.</p>
+    <p style="text-align:center;margin-top:18px;font-size:13px;color:#6b7280;">Plus members get early access to new features and direct support from the founder.</p>
   </div>
 </div>
 
 <section class="hero">
-  <h1>The freelance proposal generator <span>that writes in your voice, not a template</span></h1>
-  <p>Built for freelancers who apply daily. Paste a sample of your own writing and PropAI generates your next pitch in your exact voice, matching your tone, rhythm, and style. Works on Upwork, Fiverr, LinkedIn, cold email, anywhere.</p>
-  <div class="hero-icp">Built for freelancers · Works on any platform · No Chrome extension</div>
+  <h1>The freelance proposal generator <span>that writes in your voice</span></h1>
+  <p>Paste a sample of your writing and PropAI generates proposals in your exact tone, rhythm, and style. No templates, no AI-sounding generic text.</p>
   <div class="hero-actions">
-    <button class="btn btn-primary" onclick="scrollGenerator()">Generate Free Proposal</button>
-    <a href="/login.html?tab=login" id="heroLogin"><button class="btn btn-light">Log in</button></a>
-    <a href="/login.html" id="heroSignup"><button class="btn btn-success">Sign up free</button></a>
-    <a href="/dashboard.html" id="heroDash" style="display:none;"><button class="btn btn-success">Members Dashboard</button></a>
+    <button class="btn btn-primary" onclick="scrollGenerator()">Try it free</button>
   </div>
-  <div class="feature-strip">
-    <div class="feature-pill"><span>✓</span> Matches your exact writing voice</div>
-    <div class="feature-pill"><span>✓</span> No Chrome extension required</div>
-    <div class="feature-pill"><span>✓</span> No recycled templates</div>
-    <div class="feature-pill"><span>✓</span> Any freelance platform</div>
+  <div class="mini-badge" id="welcomeBadge">2 free proposals · No account needed</div>
+</section>
+
+<section class="section" id="generator">
+  <div class="grid">
+    <div class="card">
+      <h2>Generate Proposal</h2>
+      <div class="demo-bar" id="demoBar" style="display:none;">
+        <div class="demo-bar-left">
+          <div class="demo-dot"></div>
+          <span class="demo-label">Live demo</span>
+          <span class="demo-sub" id="demoSubLabel">watching PropAI work in real time</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="demo-dots" id="demoDots"></div>
+          <button class="demo-stop" onclick="stopDemo()">Try it yourself</button>
+        </div>
+      </div>
+      <textarea id="jobDesc" placeholder="Paste job description here..."></textarea>
+      <input id="name" placeholder="Your name (optional)">
+      <input id="rate" placeholder="Your rate e.g 75/hr">
+      <input id="linkedin" placeholder="LinkedIn URL (optional)">
+      <div class="voice-field">
+        <label class="voice-label">Your writing sample - the secret ingredient</label>
+        <span class="voice-hint">Paste a past proposal, email, or bio. PropAI matches your tone, sentence length, and personality, making the output sound like you, not a template.</span>
+        <textarea id="writingSample" placeholder="e.g. a paragraph from a past proposal you were happy with, or just how you'd describe yourself in an email." style="min-height:80px;"></textarea>
+      </div>
+      <button class="btn btn-primary full" onclick="generateProposal()">Generate Proposal</button>
+      <div class="warning-banner" id="warningBanner">Last free proposal - <a onclick="openPaywall('free_limit_warning')">grab a plan to keep generating</a></div>
+      <div class="status" id="status">2 free proposals to test the quality. No card required.</div>
+    </div>
+    <div class="card">
+      <h2>Your Proposal</h2>
+      <div class="output" id="output">Your generated proposal will appear here.</div>
+      <div class="actions">
+        <button class="btn btn-light" onclick="copyProposal()">Copy</button>
+        <button class="btn btn-light" onclick="showFollowUp()">Follow-up</button>
+        <button class="btn btn-light" onclick="showRevisePanel()">Revise</button>
+      </div>
+
+  <!-- FOLLOW-UP PANEL -->
+  <div class="revise-panel" id="followUpPanel">
+    <div class="revise-panel-title">Generate a follow-up message</div>
+    <p style="font-size:12px;color:#6b7280;margin-bottom:10px;">How many days since you sent the proposal?</p>
+    <div class="revise-presets" id="followUpPresets">
+      <span class="preset-chip active" onclick="selectFollowUpDays(this,'3')">3 days</span>
+      <span class="preset-chip" onclick="selectFollowUpDays(this,'5')">5 days</span>
+      <span class="preset-chip" onclick="selectFollowUpDays(this,'7')">1 week</span>
+      <span class="preset-chip" onclick="selectFollowUpDays(this,'14')">2 weeks</span>
+    </div>
+    <p style="font-size:12px;color:#6b7280;margin-bottom:6px;">Any context to add? (optional)</p>
+    <textarea id="followUpContext" class="revise-instruction" placeholder="e.g. I saw the role is still open, or I have a new relevant portfolio piece to share"></textarea>
+    <div class="revise-btns">
+      <button class="btn btn-primary" onclick="runFollowUp()">Generate follow-up</button>
+      <button class="btn btn-light" onclick="hideFollowUp()">Cancel</button>
+    </div>
   </div>
-  <div class="mini-badge" id="welcomeBadge">3 free proposals · No account needed · No credit card</div>
-  <div class="founder-note">
-    Every proposal is a fresh AI call primed with your writing sample. No templates underneath.<br>
-    <strong style="color:#16a34a;">Sign up free — get 6 proposals instead of 3, history saved forever.</strong>
+
+  <!-- REVISE PANEL -->
+  <div class="revise-panel" id="revisePanel">
+    <div class="revise-panel-title">How should it be revised?</div>
+    <div class="revise-presets" id="revisePresets">
+      <span class="preset-chip" onclick="selectPreset(this,'Make it shorter, under 120 words')">Shorter</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Make the tone warmer and more personable')">Warmer tone</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Make it more direct and confident, cut any hedging language')">More direct</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Reference more specific details from the job description')">More specific</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Remove any phrases that sound AI-generated or generic')">Less AI-sounding</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Add a stronger, clearer call to action at the end')">Stronger CTA</span>
+    </div>
+    <textarea id="reviseInstruction" class="revise-instruction" placeholder="Or type your own instruction..."></textarea>
+    <div class="revise-btns">
+      <button class="btn btn-primary" onclick="runRevise()">Apply revision</button>
+      <button class="btn btn-light" onclick="hideRevisePanel()">Cancel</button>
+    </div>
   </div>
-  <div class="free-counter" id="freeCounter"><span id="freeCountNum">3</span> free proposals remaining</div>
+
+</div>
+
+  </div>
 </section>
 
 <section class="comparison">
@@ -315,84 +374,6 @@ footer{ padding:30px; text-align:center; color:#6b7280; margin-top:40px; border-
   </div>
 </section>
 
-<section class="section" id="generator">
-  <div class="grid">
-    <div class="card">
-      <h2>Generate Proposal</h2>
-      <div class="demo-bar" id="demoBar">
-        <div class="demo-bar-left">
-          <div class="demo-dot"></div>
-          <span class="demo-label">Live demo</span>
-          <span class="demo-sub" id="demoSubLabel">watching PropAI work in real time</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div class="demo-dots" id="demoDots"></div>
-          <button class="demo-stop" onclick="stopDemo()">Try it yourself</button>
-        </div>
-      </div>
-      <textarea id="jobDesc" placeholder="Paste job description here..."></textarea>
-      <input id="name" placeholder="Your name (optional)">
-      <input id="rate" placeholder="Your rate e.g 75/hr">
-      <input id="linkedin" placeholder="LinkedIn URL (optional)">
-      <div class="voice-field">
-        <label class="voice-label">Your writing sample - the secret ingredient</label>
-        <span class="voice-hint">Paste a past proposal, email, or bio. PropAI matches your tone, sentence length, and personality, making the output sound like you, not a template.</span>
-        <textarea id="writingSample" placeholder="e.g. a paragraph from a past proposal you were happy with, or just how you'd describe yourself in an email." style="min-height:80px;"></textarea>
-      </div>
-      <button class="btn btn-primary full" onclick="generateProposal()">Generate Proposal</button>
-      <div class="warning-banner" id="warningBanner">Last free proposal - <a onclick="openPaywall('free_limit_warning')">grab a plan to keep generating</a></div>
-      <div class="status" id="status">3 free proposals to test the quality. No card required.</div>
-    </div>
-    <div class="card">
-      <h2>Your Proposal</h2>
-      <div class="output" id="output">Your generated proposal will appear here.</div>
-      <div class="actions">
-        <button class="btn btn-light" onclick="copyProposal()">Copy</button>
-        <button class="btn btn-light" onclick="showFollowUp()">Follow-up</button>
-        <button class="btn btn-light" onclick="showRevisePanel()">Revise</button>
-      </div>
-
-  <!-- FOLLOW-UP PANEL -->
-  <div class="revise-panel" id="followUpPanel">
-    <div class="revise-panel-title">Generate a follow-up message</div>
-    <p style="font-size:12px;color:#6b7280;margin-bottom:10px;">How many days since you sent the proposal?</p>
-    <div class="revise-presets" id="followUpPresets">
-      <span class="preset-chip active" onclick="selectFollowUpDays(this,'3')">3 days</span>
-      <span class="preset-chip" onclick="selectFollowUpDays(this,'5')">5 days</span>
-      <span class="preset-chip" onclick="selectFollowUpDays(this,'7')">1 week</span>
-      <span class="preset-chip" onclick="selectFollowUpDays(this,'14')">2 weeks</span>
-    </div>
-    <p style="font-size:12px;color:#6b7280;margin-bottom:6px;">Any context to add? (optional)</p>
-    <textarea id="followUpContext" class="revise-instruction" placeholder="e.g. I saw the role is still open, or I have a new relevant portfolio piece to share"></textarea>
-    <div class="revise-btns">
-      <button class="btn btn-primary" onclick="runFollowUp()">Generate follow-up</button>
-      <button class="btn btn-light" onclick="hideFollowUp()">Cancel</button>
-    </div>
-  </div>
-
-  <!-- REVISE PANEL -->
-  <div class="revise-panel" id="revisePanel">
-    <div class="revise-panel-title">How should it be revised?</div>
-    <div class="revise-presets" id="revisePresets">
-      <span class="preset-chip" onclick="selectPreset(this,'Make it shorter, under 120 words')">Shorter</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Make the tone warmer and more personable')">Warmer tone</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Make it more direct and confident, cut any hedging language')">More direct</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Reference more specific details from the job description')">More specific</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Remove any phrases that sound AI-generated or generic')">Less AI-sounding</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Add a stronger, clearer call to action at the end')">Stronger CTA</span>
-    </div>
-    <textarea id="reviseInstruction" class="revise-instruction" placeholder="Or type your own instruction..."></textarea>
-    <div class="revise-btns">
-      <button class="btn btn-primary" onclick="runRevise()">Apply revision</button>
-      <button class="btn btn-light" onclick="hideRevisePanel()">Cancel</button>
-    </div>
-  </div>
-
-</div>
-
-  </div>
-</section>
-
 <section class="founder-section">
   <h3>A note from the builder</h3>
   <p>I'm a solo developer building PropAI in public. The product is brand new — that means you're early. All feedback is welcome.</p>
@@ -403,7 +384,7 @@ footer{ padding:30px; text-align:center; color:#6b7280; margin-top:40px; border-
 <footer>2026 PropAI · ActOnIT · <a href="/login.html?tab=login" style="color:#6b7280;">Login</a> · <a href="#" onclick="openPaywall('footer_pricing');return false;" style="color:#6b7280;">Pricing</a></footer>
 
 <script>
-const FREE_LIMIT=3;let lastProposal="";let followUpDays="3";
+const FREE_LIMIT=2;let lastProposal="";let followUpDays="3";
 
 function trackEvent(name,data){
   try{
@@ -482,7 +463,7 @@ function checkLoginState(){
     document.getElementById("heroSignup").style.display="inline-block";
     document.getElementById("dashLink").style.display="none";
     document.getElementById("heroDash").style.display="none";
-    document.getElementById("welcomeBadge").innerText="3 free proposals · No account needed · No credit card";
+    document.getElementById("welcomeBadge").innerText="2 free proposals · No account needed";
     document.getElementById("topBanner").style.display="none";
   }
 }
@@ -495,8 +476,8 @@ function checkFreeWarning(){
   updateFreeCounter(remaining);
   if(uses>0&&remaining<=1&&remaining>0){document.getElementById("warningBanner").style.display="block";}
   if(uses>=FREE_LIMIT){
-    document.getElementById("paywallTitle").innerText="Your 3 free proposals are up";
-    document.getElementById("paywallSub").innerHTML="Pick a plan to keep generating — credits never expire, and Pro is 50% off with code <strong>LAUNCH50</strong>.";
+    document.getElementById("paywallTitle").innerText="Your 2 free proposals are up";
+    document.getElementById("paywallSub").innerHTML="Choose a plan to keep generating. Free tier gives you 50 proposals per week.";
     openPaywall("free_limit_reached");
   }
 }
@@ -514,7 +495,7 @@ function closePaywall(){
 document.getElementById("paywallModal").addEventListener("click",function(e){
   if(e.target===this){closePaywall();}
 });
-function updateFreeUses(remaining){if(remaining===null||remaining===undefined)return;const uses=FREE_LIMIT-remaining;localStorage.setItem("propai_free_uses",uses);updateFreeCounter(remaining);if(remaining<=1&&remaining>0){document.getElementById("warningBanner").style.display="block";}if(remaining===0){document.getElementById("warningBanner").style.display="none";document.getElementById("paywallTitle").innerText="Your 3 free proposals are up";document.getElementById("paywallSub").innerHTML="Pick a plan to keep generating — credits never expire, and Pro is 50% off with code <strong>LAUNCH50</strong>.";openPaywall("free_limit_reached");}}
+function updateFreeUses(remaining){if(remaining===null||remaining===undefined)return;const uses=FREE_LIMIT-remaining;localStorage.setItem("propai_free_uses",uses);updateFreeCounter(remaining);if(remaining<=1&&remaining>0){document.getElementById("warningBanner").style.display="block";}if(remaining===0){document.getElementById("warningBanner").style.display="none";document.getElementById("paywallTitle").innerText="Your 2 free proposals are up";document.getElementById("paywallSub").innerHTML="Choose a plan to keep generating. Free tier gives you 50 proposals per week.";openPaywall("free_limit_reached");}}
 function scrollGenerator(){stopDemo();document.getElementById("generator").scrollIntoView({behavior:"smooth"});trackEvent("scroll_to_generator");}
 async function safeFetchJson(url,opts){try{const res=await fetch(url,opts);const ct=res.headers.get("content-type")||"";if(!ct.includes("application/json")){return{ok:false,status:res.status,data:{error:"Service temporarily unavailable.",code:"NON_JSON_RESPONSE"}};}const data=await res.json();return{ok:res.ok,status:res.status,data};}catch(err){return{ok:false,status:0,data:{error:"Network error. Please check your connection.",code:"NETWORK_ERROR"}};}}
 
@@ -628,7 +609,6 @@ function setUnlimitedPlan(mode){
 checkLoginState();
 checkSuccessBanner();
 checkFreeWarning();
-startDemo();
 </script>
 
 </body>

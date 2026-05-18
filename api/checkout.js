@@ -14,10 +14,7 @@ export default async function handler(req, res) {
   const { plan, email } = req.body;
 
   const planConfig = {
-    starter:          { price: process.env.STRIPE_STARTER_PRICE,          mode: "payment",      credits: 10 },
-    pro:              { price: process.env.STRIPE_PRO_PRICE,              mode: "payment",      credits: 50 },
-    unlimited:        { price: process.env.STRIPE_UNLIMITED_PRICE,        mode: "subscription", credits: -1 },
-    unlimited_annual: { price: process.env.STRIPE_UNLIMITED_ANNUAL_PRICE, mode: "subscription", credits: -1 }
+    plus:             { price: process.env.STRIPE_PLUS_PRICE || "price_12345", mode: "payment", credits: 100 }
   };
 
   const config = planConfig[plan];
