@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -10,11 +9,11 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "wnu1bp2ige");
+(function(c,l,a,r,i,t,y){
+c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "wnu1bp2ige");
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 <style>
@@ -23,7 +22,7 @@ body{ font-family:Arial, sans-serif; background:#f8fafc; color:#111827; }
 nav{ height:72px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; background:white; border-bottom:1px solid #e5e7eb; position:sticky; top:0; z-index:100; }
 .logo{ font-size:22px; font-weight:700; color:#2563eb; }
 .nav-right{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-.btn{ padding:10px 18px; border:none; border-radius:8px; cursor:pointer; font-weight:700; font-size:14px; transition:0.2s ease; }
+.btn{ padding:10px 18px; border:none; border-radius:8px; cursor:pointer; font-weight:700; font-size:14px; transition:0.2s ease; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
 .btn:hover{ transform:translateY(-1px); opacity:0.95; }
 .btn-primary{ background:#2563eb; color:white; }
 .btn-light{ background:white; border:1px solid #ddd; color:#111827; }
@@ -61,17 +60,17 @@ textarea{ min-height:180px; resize:vertical; }
 .voice-hint{ font-size:12px; color:#6b7280; margin-top:4px; display:block; line-height:1.5; }
 .success-banner{ background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:14px 18px; color:#166534; font-size:15px; font-weight:600; display:none; max-width:1100px; margin:0 auto 20px; }
 .modal-overlay{
-  display:none; position:fixed; inset:0;
-  background:rgba(0,0,0,0.55); z-index:1000;
-  align-items:flex-start; justify-content:center;
-  padding:16px; overflow-y:auto;
+display:none; position:fixed; inset:0;
+background:rgba(0,0,0,0.55); z-index:1000;
+align-items:flex-start; justify-content:center;
+padding:16px; overflow-y:auto;
 }
 .modal-overlay.open{ display:flex; }
 .modal-box{
-  background:white; border-radius:20px;
-  padding:36px 32px; max-width:680px; width:100%;
-  box-shadow:0 20px 60px rgba(0,0,0,0.18);
-  position:relative; margin:auto;
+background:white; border-radius:20px;
+padding:36px 32px; max-width:680px; width:100%;
+box-shadow:0 20px 60px rgba(0,0,0,0.18);
+position:relative; margin:auto;
 }
 .modal-box h2{ text-align:center; font-size:24px; margin-bottom:6px; }
 .modal-box .modal-sub{ text-align:center; color:#6b7280; font-size:15px; margin-bottom:28px; }
@@ -160,224 +159,223 @@ footer{ padding:30px; text-align:center; color:#6b7280; margin-top:40px; border-
 .revise-instruction:focus{ outline:none; border-color:#2563eb; }
 .revise-btns{ display:flex; gap:8px; }
 @media(max-width:960px){
-  .grid{ grid-template-columns:1fr; }
-  .hero h1{ font-size:42px; }
-  nav{ height:auto; padding:16px; align-items:flex-start; gap:12px; flex-direction:column; }
-  .comp-cards{ grid-template-columns:1fr; gap:12px; }
-  .vs-col{ padding-top:0; }
-  .comparison-header h2{ font-size:28px; }
-  .feature-strip{ gap:16px; }
-  .steps{ grid-template-columns:1fr; gap:16px; }
-  .step-arrow{ padding-top:0; font-size:18px; transform:rotate(90deg); }
-  .how-header h2{ font-size:28px; }
+.grid{ grid-template-columns:1fr; }
+.hero h1{ font-size:42px; }
+nav{ height:auto; padding:16px; align-items:flex-start; gap:12px; flex-direction:column; }
+.nav-right{ width:100%; }
+.comp-cards{ grid-template-columns:1fr; gap:12px; }
+.vs-col{ padding-top:0; }
+.comparison-header h2{ font-size:28px; }
+.feature-strip{ gap:16px; }
+.steps{ grid-template-columns:1fr; gap:16px; }
+.step-arrow{ padding-top:0; font-size:18px; transform:rotate(90deg); }
+.how-header h2{ font-size:28px; }
 }
 @media(max-width:600px){
-  .modal-plans{ grid-template-columns:1fr; }
-  .modal-box{ padding:24px 16px; border-radius:16px; }
-  .modal-close{ top:12px; right:14px; font-size:20px; }
+.modal-plans{ grid-template-columns:1fr; }
+.modal-box{ padding:24px 16px; border-radius:16px; }
+.modal-close{ top:12px; right:14px; font-size:20px; }
 }
 </style>
 </head>
 <body>
-
 <div class="ltd-banner" id="topBanner" style="display:none;">
-  Launch week — use code <code>LAUNCH50</code> for 50% off Pro · first 20 customers only
+Launch week — use code <code>LAUNCH50</code> for 50% off Pro · first 20 customers only
 </div>
-
 <nav>
   <div class="logo">PropAI</div>
   <div class="nav-right" id="navActions">
-    <a href="/login.html?tab=login" id="loginLink"><button class="btn btn-light">Log in</button></a>
-    <a href="/login.html" id="signupLink"><button class="btn btn-success">Sign up free</button></a>
-    <a href="/dashboard.html" id="dashLink" style="display:none;"><button class="btn btn-success">Dashboard</button></a>
+    <a href="/login.html?tab=login" id="loginLink" class="btn btn-light">Log in</a>
+    <a href="/login.html" id="signupLink" class="btn btn-success">Sign up free</a>
+    <a href="/dashboard.html" id="dashLink" class="btn btn-success" style="display:none;">Dashboard</a>
   </div>
 </nav>
 
 <div class="success-banner" id="successBanner">Payment successful! Your credits have been added. <a href="/login.html?tab=login">Login to your dashboard</a> to access all features.</div>
 
 <div class="modal-overlay" id="paywallModal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closePaywall()">x</button>
-    <h2 id="paywallTitle">Choose your plan</h2>
-    <p class="modal-sub" id="paywallSub">Start free, upgrade when you need more.</p>
-    <div class="modal-plans">
-      <div class="modal-plan"><div class="mp-name">Free</div><div class="mp-price">0</div><div class="mp-credits">50 proposals/week</div><div class="mp-desc">Perfect for getting started. No credit card required.</div><button class="btn btn-primary full" onclick="window.location.href='/login.html'">Sign up free</button></div>
-      <div class="modal-plan best"><div class="mp-name">Plus</div><div class="mp-price">5</div><div class="mp-credits">100 proposals/week</div><div class="mp-desc">Early access features + direct support from founder.</div><button class="btn btn-primary full" onclick="buyPlan('plus')">Get Plus - €5</button></div>
-    </div>
-    <p style="text-align:center;margin-top:18px;font-size:13px;color:#6b7280;">Plus members get early access to new features and direct support from the founder.</p>
-  </div>
+<div class="modal-box">
+<button class="modal-close" onclick="closePaywall()">x</button>
+<h2 id="paywallTitle">Choose your plan</h2>
+<p class="modal-sub" id="paywallSub">Start free, upgrade when you need more.</p>
+<div class="modal-plans">
+<div class="modal-plan"><div class="mp-name">Free</div><div class="mp-price">0</div><div class="mp-credits">50 proposals/week</div><div class="mp-desc">Perfect for getting started. No credit card required.</div><button class="btn btn-primary full" onclick="window.location.href='/login.html'">Sign up free</button></div>
+<div class="modal-plan best"><div class="mp-name">Plus</div><div class="mp-price">5</div><div class="mp-credits">100 proposals/week</div><div class="mp-desc">Early access features + direct support from founder.</div><button class="btn btn-primary full" onclick="buyPlan('plus')">Get Plus - €5</button></div>
+</div>
+<p style="text-align:center;margin-top:18px;font-size:13px;color:#6b7280;">Plus members get early access to new features and direct support from the founder.</p>
+</div>
 </div>
 
 <section class="hero">
-  <h1>The freelance proposal generator <span>that writes in your voice</span></h1>
-  <p>Paste a sample of your writing and PropAI generates proposals in your exact tone, rhythm, and style. No templates, no AI-sounding generic text.</p>
-  <div class="hero-actions">
-    <button class="btn btn-primary" onclick="scrollGenerator()">Get your first proposal</button>
-  </div>
+<h1>The freelance proposal generator <span>that writes in your voice</span></h1>
+<p>Paste a sample of your writing and PropAI generates proposals in your exact tone, rhythm, and style. No templates, no AI-sounding generic text.</p>
+<div class="hero-actions">
+<button class="btn btn-primary" onclick="scrollGenerator()">Get your first proposal</button>
+</div>
 </section>
 
 <section class="section" id="generator">
-  <div class="grid">
-    <div class="card">
-      <h2>Generate Proposal</h2>
-      <div class="demo-bar" id="demoBar" style="display:none;">
-        <div class="demo-bar-left">
-          <div class="demo-dot"></div>
-          <span class="demo-label">Live demo</span>
-          <span class="demo-sub" id="demoSubLabel">watching PropAI work in real time</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div class="demo-dots" id="demoDots"></div>
-          <button class="demo-stop" onclick="stopDemo()">Try it yourself</button>
-        </div>
-      </div>
-      <textarea id="jobDesc" placeholder="Paste job description here..."></textarea>
-      <input id="name" placeholder="Your name (optional)">
-      <input id="rate" placeholder="Your rate e.g 75/hr">
-      <input id="linkedin" placeholder="LinkedIn URL (optional)">
-      <div class="voice-field">
-        <label class="voice-label">Your writing sample - the secret ingredient</label>
-        <span class="voice-hint">Paste a past proposal, email, or bio. PropAI matches your tone, sentence length, and personality, making the output sound like you, not a template.</span>
-        <textarea id="writingSample" placeholder="e.g. a paragraph from a past proposal you were happy with, or just how you'd describe yourself in an email." style="min-height:80px;"></textarea>
-      </div>
-      <button class="btn btn-primary full" onclick="generateProposal()">Generate Proposal</button>
-      <div class="warning-banner" id="warningBanner">Last free proposal - <a onclick="openPaywall('free_limit_warning')">grab a plan to keep generating</a></div>
-      <div class="status" id="status">2 free proposals to test the quality. No card required.</div>
-    </div>
-    <div class="card">
-      <h2>Your Proposal</h2>
-      <div class="output" id="output">Your generated proposal will appear here.</div>
-      <div class="actions">
-        <button class="btn btn-light" onclick="copyProposal()">Copy</button>
-        <button class="btn btn-light" onclick="showFollowUp()">Follow-up</button>
-        <button class="btn btn-light" onclick="showRevisePanel()">Revise</button>
-      </div>
-
-  <!-- FOLLOW-UP PANEL -->
-  <div class="revise-panel" id="followUpPanel">
-    <div class="revise-panel-title">Generate a follow-up message</div>
-    <p style="font-size:12px;color:#6b7280;margin-bottom:10px;">How many days since you sent the proposal?</p>
-    <div class="revise-presets" id="followUpPresets">
-      <span class="preset-chip active" onclick="selectFollowUpDays(this,'3')">3 days</span>
-      <span class="preset-chip" onclick="selectFollowUpDays(this,'5')">5 days</span>
-      <span class="preset-chip" onclick="selectFollowUpDays(this,'7')">1 week</span>
-      <span class="preset-chip" onclick="selectFollowUpDays(this,'14')">2 weeks</span>
-    </div>
-    <p style="font-size:12px;color:#6b7280;margin-bottom:6px;">Any context to add? (optional)</p>
-    <textarea id="followUpContext" class="revise-instruction" placeholder="e.g. I saw the role is still open, or I have a new relevant portfolio piece to share"></textarea>
-    <div class="revise-btns">
-      <button class="btn btn-primary" onclick="runFollowUp()">Generate follow-up</button>
-      <button class="btn btn-light" onclick="hideFollowUp()">Cancel</button>
-    </div>
-  </div>
-
-  <!-- REVISE PANEL -->
-  <div class="revise-panel" id="revisePanel">
-    <div class="revise-panel-title">How should it be revised?</div>
-    <div class="revise-presets" id="revisePresets">
-      <span class="preset-chip" onclick="selectPreset(this,'Make it shorter, under 120 words')">Shorter</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Make the tone warmer and more personable')">Warmer tone</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Make it more direct and confident, cut any hedging language')">More direct</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Reference more specific details from the job description')">More specific</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Remove any phrases that sound AI-generated or generic')">Less AI-sounding</span>
-      <span class="preset-chip" onclick="selectPreset(this,'Add a stronger, clearer call to action at the end')">Stronger CTA</span>
-    </div>
-    <textarea id="reviseInstruction" class="revise-instruction" placeholder="Or type your own instruction..."></textarea>
-    <div class="revise-btns">
-      <button class="btn btn-primary" onclick="runRevise()">Apply revision</button>
-      <button class="btn btn-light" onclick="hideRevisePanel()">Cancel</button>
-    </div>
-  </div>
-
+<div class="grid">
+<div class="card">
+<h2>Generate Proposal</h2>
+<div class="demo-bar" id="demoBar" style="display:none;">
+<div class="demo-bar-left">
+<div class="demo-dot"></div>
+<span class="demo-label">Live demo</span>
+<span class="demo-sub" id="demoSubLabel">watching PropAI work in real time</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;">
+<div class="demo-dots" id="demoDots"></div>
+<button class="demo-stop" onclick="stopDemo()">Try it yourself</button>
+</div>
+</div>
+<textarea id="jobDesc" placeholder="Paste job description here..."></textarea>
+<input id="name" placeholder="Your name (optional)">
+<input id="rate" placeholder="Your rate e.g 75/hr">
+<input id="linkedin" placeholder="LinkedIn URL (optional)">
+<div class="voice-field">
+<label class="voice-label">Your writing sample - the secret ingredient</label>
+<span class="voice-hint">Paste a past proposal, email, or bio. PropAI matches your tone, sentence length, and personality, making the output sound like you, not a template.</span>
+<textarea id="writingSample" placeholder="e.g. a paragraph from a past proposal you were happy with, or just how you'd describe yourself in an email." style="min-height:80px;"></textarea>
+</div>
+<button class="btn btn-primary full" onclick="generateProposal()">Generate Proposal</button>
+<div class="warning-banner" id="warningBanner">Last free proposal - <a onclick="openPaywall('free_limit_warning')">grab a plan to keep generating</a></div>
+<div class="status" id="status"></div>
 </div>
 
-  </div>
+<div class="card">
+<h2>Your Proposal</h2>
+<div class="output" id="output">Your generated proposal will appear here.</div>
+<div class="actions">
+<button class="btn btn-light" onclick="copyProposal()">Copy</button>
+<button class="btn btn-light" onclick="showFollowUp()">Follow-up</button>
+<button class="btn btn-light" onclick="showRevisePanel()">Revise</button>
+</div>
+
+<!-- FOLLOW-UP PANEL -->
+<div class="revise-panel" id="followUpPanel">
+<div class="revise-panel-title">Generate a follow-up message</div>
+<p style="font-size:12px;color:#6b7280;margin-bottom:10px;">How many days since you sent the proposal?</p>
+<div class="revise-presets" id="followUpPresets">
+<span class="preset-chip active" onclick="selectFollowUpDays(this,'3')">3 days</span>
+<span class="preset-chip" onclick="selectFollowUpDays(this,'5')">5 days</span>
+<span class="preset-chip" onclick="selectFollowUpDays(this,'7')">1 week</span>
+<span class="preset-chip" onclick="selectFollowUpDays(this,'14')">2 weeks</span>
+</div>
+<p style="font-size:12px;color:#6b7280;margin-bottom:6px;">Any context to add? (optional)</p>
+<textarea id="followUpContext" class="revise-instruction" placeholder="e.g. I saw the role is still open, or I have a new relevant portfolio piece to share"></textarea>
+<div class="revise-btns">
+<button class="btn btn-primary" onclick="runFollowUp()">Generate follow-up</button>
+<button class="btn btn-light" onclick="hideFollowUp()">Cancel</button>
+</div>
+</div>
+
+<!-- REVISE PANEL -->
+<div class="revise-panel" id="revisePanel">
+<div class="revise-panel-title">How should it be revised?</div>
+<div class="revise-presets" id="revisePresets">
+<span class="preset-chip" onclick="selectPreset(this,'Make it shorter, under 120 words')">Shorter</span>
+<span class="preset-chip" onclick="selectPreset(this,'Make the tone warmer and more personable')">Warmer tone</span>
+<span class="preset-chip" onclick="selectPreset(this,'Make it more direct and confident, cut any hedging language')">More direct</span>
+<span class="preset-chip" onclick="selectPreset(this,'Reference more specific details from the job description')">More specific</span>
+<span class="preset-chip" onclick="selectPreset(this,'Remove any phrases that sound AI-generated or generic')">Less AI-sounding</span>
+<span class="preset-chip" onclick="selectPreset(this,'Add a stronger, clearer call to action at the end')">Stronger CTA</span>
+</div>
+<textarea id="reviseInstruction" class="revise-instruction" placeholder="Or type your own instruction..."></textarea>
+<div class="revise-btns">
+<button class="btn btn-primary" onclick="runRevise()">Apply revision</button>
+<button class="btn btn-light" onclick="hideRevisePanel()">Cancel</button>
+</div>
+</div>
+
+</div>
+</div>
 </section>
 
 <section class="comparison">
-  <div class="comparison-header">
-    <h2>Why generic AI proposals <span style="color:#dc2626;">lose</span> jobs</h2>
-    <p>Same job post. Same brief. See why clients pick one and ignore the other.</p>
-  </div>
-  <div class="comp-carousel-wrap" id="compCarouselWrap">
-    <div class="comp-slide active">
-      <div class="comp-job-tag">Upwork · React developer for B2B SaaS dashboard · $2,500-4,000</div>
-      <div class="comp-cards">
-        <div class="comp-card generic"><div class="comp-card-label">Generic AI proposal</div><div class="comp-card-text">"Hello! I'm excited to apply for your React developer position. I have extensive experience with React, Next.js, Supabase, and Stripe and I'm confident I can deliver a high-quality dashboard that meets all your requirements. I always deliver on time and within budget and pride myself on clear communication. Please check out my portfolio and let me know if you'd like to discuss further. Looking forward to working with you!"</div><div class="comp-tags"><span class="tag-bad">Generic opener</span><span class="tag-bad">No specifics from the brief</span><span class="tag-bad">Anyone could send this</span></div></div>
-        <div class="vs-col"><div class="vs-pill">VS</div></div>
-        <div class="comp-card propai"><div class="comp-card-label">PropAI (with your writing sample)</div><div class="comp-card-text">"Figma designs already ready is a green light. No discovery phase needed, I can start building immediately. Four Next.js + Supabase dashboards shipped this year, so role management and real-time charts are straightforward. Stripe billing portal is usually where projects stall (webhook edge cases), so I'd tackle that in week 1. Realistic timeline: 18 working days. Happy to do a paid 2-day sprint on the auth layer first so you can see my code quality before committing."</div><div class="comp-tags"><span class="tag-good">References the actual brief</span><span class="tag-good">Sounds like a real person</span><span class="tag-good">Clear next step</span></div></div>
-      </div>
-    </div>
-    <div class="comp-slide">
-      <div class="comp-job-tag">Fiverr · Email copywriter for SaaS onboarding sequence · 12% to 20%+ conversion goal</div>
-      <div class="comp-cards">
-        <div class="comp-card generic"><div class="comp-card-label">Generic AI proposal</div><div class="comp-card-text">"Hi there! I would love to help with your email onboarding sequence. As an experienced copywriter with a passion for compelling content, I have written numerous email sequences for various clients across many industries. I understand the importance of reducing churn and increasing conversions. I will craft engaging, personalized emails that resonate with your audience and drive them toward upgrading. Please feel free to reach out if you have any questions!"</div><div class="comp-tags"><span class="tag-bad">"Passion for compelling content"</span><span class="tag-bad">Ignores the 12% to 20% goal</span><span class="tag-bad">Zero SaaS knowledge shown</span></div></div>
-        <div class="vs-col"><div class="vs-pill">VS</div></div>
-        <div class="comp-card propai"><div class="comp-card-label">PropAI (with your writing sample)</div><div class="comp-card-text">"12% to 20%+ is very doable. The gap is almost always email 2 or 3: you're still pitching features instead of the user's first win. I'd audit your current sequence first (30-min call), then rebuild around your activation metric. For a project management tool, that's the moment a user adds their first team member. Six emails, each with one job to do. Delivery: 7 days. I can show you 3 sequences I've written for similar SaaS tools."</div><div class="comp-tags"><span class="tag-good">Addresses the exact metric</span><span class="tag-good">Shows real expertise</span><span class="tag-good">Proposes a concrete process</span></div></div>
-      </div>
-    </div>
-    <div class="comp-slide">
-      <div class="comp-job-tag">Direct outreach · Social media manager for organic skincare brand · $800/mo</div>
-      <div class="comp-cards">
-        <div class="comp-card generic"><div class="comp-card-label">Generic AI proposal</div><div class="comp-card-text">"Hello! I am a passionate social media manager with years of experience managing Instagram and TikTok accounts for various brands. I create engaging content that resonates with target audiences and drives growth. I am well-versed in organic beauty brands and understand the importance of authentic storytelling. I am reliable, creative, and always meet deadlines. I would love to bring my expertise to your brand and help you grow your online presence!"</div><div class="comp-tags"><span class="tag-bad">"Passionate" opener</span><span class="tag-bad">No content strategy shown</span><span class="tag-bad">Could be sent to 100 clients</span></div></div>
-        <div class="vs-col"><div class="vs-pill">VS</div></div>
-        <div class="comp-card propai"><div class="comp-card-label">PropAI (with your writing sample)</div><div class="comp-card-text">"Organic skincare on TikTok is a sweet spot right now. The algorithm heavily favors authentic founder-led content over polished brand posts. Two educational posts per week (ingredient spotlights, routines), one UGC repost, daily stories. Short founder POVs are outperforming aesthetic product shots in this space by 3-4x. Can I see your current top 5 posts? I want to know what's already resonating before proposing a content calendar."</div><div class="comp-tags"><span class="tag-good">Specific to their niche</span><span class="tag-good">Actual content strategy</span><span class="tag-good">Asks a smart question</span></div></div>
-      </div>
-    </div>
-    <div class="comp-nav">
-      <button class="comp-nav-btn" onclick="moveComp(-1)">&#8592;</button>
-      <div class="comp-nav-dots" id="compDots"></div>
-      <button class="comp-nav-btn" onclick="moveComp(1)">&#8594;</button>
-    </div>
-    <div class="comp-progress"><div class="comp-progress-bar" id="compProgressBar"></div></div>
-  </div>
+<div class="comparison-header">
+<h2>Why generic AI proposals <span style="color:#dc2626;">lose</span> jobs</h2>
+<p>Same job post. Same brief. See why clients pick one and ignore the other.</p>
+</div>
+<div class="comp-carousel-wrap" id="compCarouselWrap">
+<div class="comp-slide active">
+<div class="comp-job-tag">Upwork · React developer for B2B SaaS dashboard · $2,500-4,000</div>
+<div class="comp-cards">
+<div class="comp-card generic"><div class="comp-card-label">Generic AI proposal</div><div class="comp-card-text">"Hello! I'm excited to apply for your React developer position. I have extensive experience with React, Next.js, Supabase, and Stripe and I'm confident I can deliver a high-quality dashboard that meets all your requirements. I always deliver on time and within budget and pride myself on clear communication. Please check out my portfolio and let me know if you'd like to discuss further. Looking forward to working with you!"</div><div class="comp-tags"><span class="tag-bad">Generic opener</span><span class="tag-bad">No specifics from the brief</span><span class="tag-bad">Anyone could send this</span></div></div>
+<div class="vs-col"><div class="vs-pill">VS</div></div>
+<div class="comp-card propai"><div class="comp-card-label">PropAI (with your writing sample)</div><div class="comp-card-text">"Figma designs already ready is a green light. No discovery phase needed, I can start building immediately. Four Next.js + Supabase dashboards shipped this year, so role management and real-time charts are straightforward. Stripe billing portal is usually where projects stall (webhook edge cases), so I'd tackle that in week 1. Realistic timeline: 18 working days. Happy to do a paid 2-day sprint on the auth layer first so you can see my code quality before committing."</div><div class="comp-tags"><span class="tag-good">References the actual brief</span><span class="tag-good">Sounds like a real person</span><span class="tag-good">Clear next step</span></div></div>
+</div>
+</div>
+<div class="comp-slide">
+<div class="comp-job-tag">Fiverr · Email copywriter for SaaS onboarding sequence · 12% to 20%+ conversion goal</div>
+<div class="comp-cards">
+<div class="comp-card generic"><div class="comp-card-label">Generic AI proposal</div><div class="comp-card-text">"Hi there! I would love to help with your email onboarding sequence. As an experienced copywriter with a passion for compelling content, I have written numerous email sequences for various clients across many industries. I understand the importance of reducing churn and increasing conversions. I will craft engaging, personalized emails that resonate with your audience and drive them toward upgrading. Please feel free to reach out if you have any questions!"</div><div class="comp-tags"><span class="tag-bad">"Passion for compelling content"</span><span class="tag-bad">Ignores the 12% to 20% goal</span><span class="tag-bad">Zero SaaS knowledge shown</span></div></div>
+<div class="vs-col"><div class="vs-pill">VS</div></div>
+<div class="comp-card propai"><div class="comp-card-label">PropAI (with your writing sample)</div><div class="comp-card-text">"12% to 20%+ is very doable. The gap is almost always email 2 or 3: you're still pitching features instead of the user's first win. I'd audit your current sequence first (30-min call), then rebuild around your activation metric. For a project management tool, that's the moment a user adds their first team member. Six emails, each with one job to do. Delivery: 7 days. I can show you 3 sequences I've written for similar SaaS tools."</div><div class="comp-tags"><span class="tag-good">Addresses the exact metric</span><span class="tag-good">Shows real expertise</span><span class="tag-good">Proposes a concrete process</span></div></div>
+</div>
+</div>
+<div class="comp-slide">
+<div class="comp-job-tag">Direct outreach · Social media manager for organic skincare brand · $800/mo</div>
+<div class="comp-cards">
+<div class="comp-card generic"><div class="comp-card-label">Generic AI proposal</div><div class="comp-card-text">"Hello! I am a passionate social media manager with years of experience managing Instagram and TikTok accounts for various brands. I create engaging content that resonates with target audiences and drives growth. I am well-versed in organic beauty brands and understand the importance of authentic storytelling. I am reliable, creative, and always meet deadlines. I would love to bring my expertise to your brand and help you grow your online presence!"</div><div class="comp-tags"><span class="tag-bad">"Passionate" opener</span><span class="tag-bad">No content strategy shown</span><span class="tag-bad">Could be sent to 100 clients</span></div></div>
+<div class="vs-col"><div class="vs-pill">VS</div></div>
+<div class="comp-card propai"><div class="comp-card-label">PropAI (with your writing sample)</div><div class="comp-card-text">"Organic skincare on TikTok is a sweet spot right now. The algorithm heavily favors authentic founder-led content over polished brand posts. Two educational posts per week (ingredient spotlights, routines), one UGC repost, daily stories. Short founder POVs are outperforming aesthetic product shots in this space by 3-4x. Can I see your current top 5 posts? I want to know what's already resonating before proposing a content calendar."</div><div class="comp-tags"><span class="tag-good">Specific to their niche</span><span class="tag-good">Actual content strategy</span><span class="tag-good">Asks a smart question</span></div></div>
+</div>
+</div>
+<div class="comp-nav">
+<button class="comp-nav-btn" onclick="moveComp(-1)">&#8592;</button>
+<div class="comp-nav-dots" id="compDots"></div>
+<button class="comp-nav-btn" onclick="moveComp(1)">&#8594;</button>
+</div>
+<div class="comp-progress"><div class="comp-progress-bar" id="compProgressBar"></div></div>
+</div>
 </section>
 
 <section class="how-it-works">
-  <div class="how-header">
-    <h2>How the voice matching actually works</h2>
-    <p>Not a tone slider. Not a template. A forensic analysis of how you write, applied to every proposal.</p>
-    <div class="how-sub">This is what makes it different from ChatGPT</div>
-  </div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>Paste your writing sample</h3>
-      <p>A past proposal, an email, a bio: anything you've written that felt natural. Even one paragraph is enough. This is the input no other tool asks for.</p>
-    </div>
-    <div class="step-arrow">&#8594;</div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>PropAI extracts your stylistic fingerprint</h3>
-      <p>Before writing a single word, the AI identifies 8 specific dimensions of how you write:</p>
-      <div class="dimensions">
-        <div class="dimension">Sentence rhythm</div>
-        <div class="dimension">Use of contractions</div>
-        <div class="dimension">Formality register</div>
-        <div class="dimension">Punctuation habits</div>
-        <div class="dimension">How you open</div>
-        <div class="dimension">Vocabulary level</div>
-        <div class="dimension">Energy &amp; warmth</div>
-        <div class="dimension">First-person style</div>
-      </div>
-    </div>
-    <div class="step-arrow">&#8594;</div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>Your proposal, written in your voice</h3>
-      <p>The output mirrors all 8 patterns exactly. The result should be indistinguishable from something you wrote yourself: not "professional-sounding AI", but you.</p>
-    </div>
-  </div>
-  <div class="how-cta">
-    <button class="btn btn-primary" style="font-size:16px;padding:14px 32px;" onclick="scrollGenerator()">Try it free - see the difference</button>
-  </div>
+<div class="how-header">
+<h2>How the voice matching actually works</h2>
+<p>Not a tone slider. Not a template. A forensic analysis of how you write, applied to every proposal.</p>
+<div class="how-sub">This is what makes it different from ChatGPT</div>
+</div>
+<div class="steps">
+<div class="step">
+<div class="step-num">1</div>
+<h3>Paste your writing sample</h3>
+<p>A past proposal, an email, a bio: anything you've written that felt natural. Even one paragraph is enough. This is the input no other tool asks for.</p>
+</div>
+<div class="step-arrow">&#8594;</div>
+<div class="step">
+<div class="step-num">2</div>
+<h3>PropAI extracts your stylistic fingerprint</h3>
+<p>Before writing a single word, the AI identifies 8 specific dimensions of how you write:</p>
+<div class="dimensions">
+<div class="dimension">Sentence rhythm</div>
+<div class="dimension">Use of contractions</div>
+<div class="dimension">Formality register</div>
+<div class="dimension">Punctuation habits</div>
+<div class="dimension">How you open</div>
+<div class="dimension">Vocabulary level</div>
+<div class="dimension">Energy &amp; warmth</div>
+<div class="dimension">First-person style</div>
+</div>
+</div>
+<div class="step-arrow">&#8594;</div>
+<div class="step">
+<div class="step-num">3</div>
+<h3>Your proposal, written in your voice</h3>
+<p>The output mirrors all 8 patterns exactly. The result should be indistinguishable from something you wrote yourself: not "professional-sounding AI", but you.</p>
+</div>
+</div>
+<div class="how-cta">
+<button class="btn btn-primary" style="font-size:16px;padding:14px 32px;" onclick="scrollGenerator()">Try it free - see the difference</button>
+</div>
 </section>
 
 <section class="founder-section">
-  <h3>A note from the builder</h3>
-  <p>I'm a solo developer building PropAI in public. The product is brand new — that means you're early. All feedback is welcome.</p>
-  <p>Every generation is a fresh call to a top-tier language model, primed with your writing sample. There are no templates underneath. That's the whole pitch.</p>
-  <p class="signoff">Built solo from Belgium</p>
+<h3>A note from the builder</h3>
+<p>I'm a solo developer building PropAI in public. The product is brand new — that means you're early. All feedback is welcome.</p>
+<p>Every generation is a fresh call to a top-tier language model, primed with your writing sample. There are no templates underneath. That's the whole pitch.</p>
+<p class="signoff">Built solo from Belgium</p>
 </section>
 
 <footer>2026 PropAI · ActOnIT · <a href="/login.html?tab=login" style="color:#6b7280;">Login</a> · <a href="#" onclick="openPaywall('footer_pricing');return false;" style="color:#6b7280;">Pricing</a></footer>
@@ -386,12 +384,12 @@ footer{ padding:30px; text-align:center; color:#6b7280; margin-top:40px; border-
 const FREE_LIMIT=2;let lastProposal="";let followUpDays="3";
 
 function trackEvent(name,data){
-  try{
-    if(typeof clarity==="function"){
-      if(data){clarity("set",name,String(data));}
-      else{clarity("event",name);}
-    }
-  }catch(e){}
+try{
+if(typeof clarity==="function"){
+if(data){clarity("set",name,String(data));}
+else{clarity("event",name);}
+}
+}catch(e){}
 }
 
 const COMP_TOTAL=3,COMP_DURATION=7000;
@@ -403,209 +401,218 @@ function moveComp(dir){goComp((compIndex+dir+COMP_TOTAL)%COMP_TOTAL);}
 buildCompDots();
 
 const demos=[
-  {label:"React dev · SaaS dashboard",job:"Looking for a React developer to build an analytics dashboard for our B2B SaaS. Needs real-time charts (Chart.js), user role management, and Stripe billing portal integration. Stack is Next.js + Supabase. Figma designs are ready. Budget $2,500-4,000. Need to start ASAP, ~3 weeks timeline.",proposal:"Figma designs already ready is a green light. No discovery phase needed, I can start building immediately. Four Next.js + Supabase dashboards shipped this year, so role management and real-time charts are straightforward. Stripe billing portal is usually where projects stall (webhook edge cases), so I'd tackle that in week 1 while it's still easy to test. Realistic timeline: 18 working days. Happy to do a paid 2-day sprint on the auth layer first so you can see my code quality before committing to the full scope."},
-  {label:"Copywriter · SaaS email sequence",job:"B2B SaaS (project management tool) looking for a copywriter to write a 6-email onboarding sequence. Goal is to reduce churn in the first 30 days. Current sequence converts at 12% to paid, want to hit 20%+. Need someone who understands SaaS, not just generic email writing. Budget: $600-900.",proposal:"12% to 20%+ is very doable. The gap is almost always email 2 or 3: you're still pitching features instead of the user's first win. I'd audit your current sequence first (30-min call), then rebuild around your activation metric. For a project management tool, that's the moment a user adds their first team member or completes their first task. Six emails, each with one job to do. Delivery: 7 days. I can show you 3 sequences I've written for similar SaaS tools."},
-  {label:"Python dev · e-commerce scraper",job:"Need a Python developer to scrape product listings from 3 e-commerce sites (including pagination and dynamic JS content). Store results in PostgreSQL. Must handle anti-bot measures. Deliverable: clean script + documentation. Budget: $300-500. Quick turnaround needed (3-5 days).",proposal:"Dynamic JS content plus anti-bot means Playwright, not Scrapy. I've been burned by that assumption before so I always scope it correctly upfront. Three sites with pagination: 3 days for the scrapers plus 1 day for PostgreSQL schema and ingestion pipeline. Retry logic and rotating user agents included as standard. One question: does this need to run on a schedule, or is it a one-time data pull? That changes the architecture slightly and might affect the price."},
-  {label:"Logo designer · wellness brand",job:"Looking for a logo designer for a new wellness & mindfulness brand targeting professional women 30-45. Think calm, premium, modern, not overly feminine. Inspired by brands like Headspace and Calm. Deliverables: primary logo + icon + color palette. Budget: $250-400.",proposal:"Headspace and Calm both use rounded, airy letterforms with a lot of white space. Good reference points. For professional women 30-45, I'd push toward a wordmark rather than an icon-first logo (more credible at small sizes on packaging). Three directions: one typographic, one with a subtle abstract mark, one more literal. Deliverables: primary SVG, favicon, HEX/RGB palette, 1-page brand guide. Quick question: is this for a digital product, physical product, or both? It affects how I approach the color palette for print vs screen."},
-  {label:"Social media manager · skincare brand",job:"We run a Shopify store selling organic skincare. Looking for a social media manager to handle Instagram + TikTok. 3 posts/week + stories + engagement. You'll work closely with our founder. Must have experience with organic beauty brands. Budget: $800/month.",proposal:"Organic skincare on TikTok is a sweet spot right now. The algorithm heavily favors authentic founder-led content over polished brand posts. Two educational posts per week (ingredient spotlights, routines), one UGC repost, daily stories. Short founder POVs are outperforming aesthetic product shots in this space by 3-4x. Can I see your current top 5 posts? I want to know what's already resonating before I propose a content calendar."},
-  {label:"Content writer · personal finance blog",job:"Need a content writer for our personal finance blog. 4 articles/month, 1,500-2,000 words each. Topics: budgeting, investing for beginners, credit scores. Must be SEO-savvy (we use Surfer SEO). US audience. No fluff, we want actionable advice. Budget: $80-120/article.",proposal:"SEO-first personal finance is exactly my lane. I've written 60+ articles for finance blogs using Surfer, and the biggest mistake I see is targeting head terms instead of question-based long-tails where a DA under 40 site can actually rank. Before I pitch topics, can you share your Surfer workspace or target keyword list? That way I'm writing to gaps in your current cluster, not just adjacent topics. Rate is $100/article for 1,500-word pieces, $115 for 2,000+. First article at standard rate, no risk."}
+{label:"React dev · SaaS dashboard",job:"Looking for a React developer to build an analytics dashboard for our B2B SaaS. Needs real-time charts (Chart.js), user role management, and Stripe billing portal integration. Stack is Next.js + Supabase. Figma designs are ready. Budget $2,500-4,000. Need to start ASAP, ~3 weeks timeline.",proposal:"Figma designs already ready is a green light. No discovery phase needed, I can start building immediately. Four Next.js + Supabase dashboards shipped this year, so role management and real-time charts are straightforward. Stripe billing portal is usually where projects stall (webhook edge cases), so I'd tackle that in week 1 while it's still easy to test. Realistic timeline: 18 working days. Happy to do a paid 2-day sprint on the auth layer first so you can see my code quality before committing to the full scope."},
+{label:"Copywriter · SaaS email sequence",job:"B2B SaaS (project management tool) looking for a copywriter to write a 6-email onboarding sequence. Goal is to reduce churn in the first 30 days. Current sequence converts at 12% to paid, want to hit 20%+. Need someone who understands SaaS, not just generic email writing. Budget: $600-900.",proposal:"12% to 20%+ is very doable. The gap is almost always email 2 or 3: you're still pitching features instead of the user's first win. I'd audit your current sequence first (30-min call), then rebuild around your activation metric. For a project management tool, that's the moment a user adds their first team member or completes their first task. Six emails, each with one job to do. Delivery: 7 days. I can show you 3 sequences I've written for similar SaaS tools."},
+{label:"Python dev · e-commerce scraper",job:"Need a Python developer to scrape product listings from 3 e-commerce sites (including pagination and dynamic JS content). Store results in PostgreSQL. Must handle anti-bot measures. Deliverable: clean script + documentation. Budget: $300-500. Quick turnaround needed (3-5 days).",proposal:"Dynamic JS content plus anti-bot means Playwright, not Scrapy. I've been burned by that assumption before so I always scope it correctly upfront. Three sites with pagination: 3 days for the scrapers plus 1 day for PostgreSQL schema and ingestion pipeline. Retry logic and rotating user agents included as standard. One question: does this need to run on a schedule, or is it a one-time data pull? That changes the architecture slightly and might affect the price."},
+{label:"Logo designer · wellness brand",job:"Looking for a logo designer for a new wellness & mindfulness brand targeting professional women 30-45. Think calm, premium, modern, not overly feminine. Inspired by brands like Headspace and Calm. Deliverables: primary logo + icon + color palette. Budget: $250-400.",proposal:"Headspace and Calm both use rounded, airy letterforms with a lot of white space. Good reference points. For professional women 30-45, I'd push toward a wordmark rather than an icon-first logo (more credible at small sizes on packaging). Three directions: one typographic, one with a subtle abstract mark, one more literal. Deliverables: primary SVG, favicon, HEX/RGB palette, 1-page brand guide. Quick question: is this for a digital product, physical product, or both? It affects how I approach the color palette for print vs screen."},
+{label:"Social media manager · skincare brand",job:"We run a Shopify store selling organic skincare. Looking for a social media manager to handle Instagram + TikTok. 3 posts/week + stories + engagement. You'll work closely with our founder. Must have experience with organic beauty brands. Budget: $800/month.",proposal:"Organic skincare on TikTok is a sweet spot right now. The algorithm heavily favors authentic founder-led content over polished brand posts. Two educational posts per week (ingredient spotlights, routines), one UGC repost, daily stories. Short founder POVs are outperforming aesthetic product shots in this space by 3-4x. Can I see your current top 5 posts? I want to know what's already resonating before I propose a content calendar."},
+{label:"Content writer · personal finance blog",job:"Need a content writer for our personal finance blog. 4 articles/month, 1,500-2,000 words each. Topics: budgeting, investing for beginners, credit scores. Must be SEO-savvy (we use Surfer SEO). US audience. No fluff, we want actionable advice. Budget: $80-120/article.",proposal:"SEO-first personal finance is exactly my lane. I've written 60+ articles for finance blogs using Surfer, and the biggest mistake I see is targeting head terms instead of question-based long-tails where a DA under 40 site can actually rank. Before I pitch topics, can you share your Surfer workspace or target keyword list? That way I'm writing to gaps in your current cluster, not just adjacent topics. Rate is $100/article for 1,500-word pieces, $115 for 2,000+. First article at standard rate, no risk."}
 ];
+
 let demoActive=false,demoIndex=0,demoTypeTimer=null,demoNextTimer=null,demoRunning=false;
 function buildDemoDots(){const c=document.getElementById("demoDots");c.innerHTML="";demos.forEach((_,i)=>{const d=document.createElement("div");d.className="demo-dot-nav"+(i===0?" active":"");d.onclick=()=>{demoIndex=i;if(demoRunning){clearTimeout(demoNextTimer);clearInterval(demoTypeTimer);runNextDemo();}};c.appendChild(d);});}
 function updateDemoDots(i){document.querySelectorAll(".demo-dot-nav").forEach((d,idx)=>d.classList.toggle("active",idx===i));}
 function typeInto(el,text,speed,onDone){let i=0;el.value="";demoTypeTimer=setInterval(()=>{if(!demoActive||i>=text.length){clearInterval(demoTypeTimer);if(onDone)onDone();return;}el.value+=text[i++];el.scrollTop=el.scrollHeight;},speed);}
 function typeIntoDiv(el,text,speed,onDone){let i=0;el.innerText="";demoTypeTimer=setInterval(()=>{if(!demoActive||i>=text.length){clearInterval(demoTypeTimer);if(onDone)onDone();return;}el.innerText+=text[i++];el.scrollTop=el.scrollHeight;},speed);}
 function runNextDemo(){
-  if(!demoActive)return;demoRunning=true;
-  const d=demos[demoIndex%demos.length];
-  updateDemoDots(demoIndex%demos.length);
-  document.getElementById("demoSubLabel").innerText=d.label;
-  const jobEl=document.getElementById("jobDesc"),outEl=document.getElementById("output"),statusEl=document.getElementById("status");
-  jobEl.value="";outEl.innerText="Your generated proposal will appear here.";statusEl.innerText="";
-  typeInto(jobEl,d.job,14,()=>{
-    if(!demoActive)return;
-    statusEl.innerText="Generating...";outEl.innerText="";
-    demoNextTimer=setTimeout(()=>{
-      if(!demoActive)return;
-      typeIntoDiv(outEl,d.proposal,10,()=>{
-        if(!demoActive)return;
-        statusEl.innerText="Proposal ready - try it yourself above";
-        demoIndex=(demoIndex+1)%demos.length;
-        demoNextTimer=setTimeout(runNextDemo,5500);
-      });
-    },900);
-  });
+if(!demoActive)return;demoRunning=true;
+const d=demos[demoIndex%demos.length];
+updateDemoDots(demoIndex%demos.length);
+document.getElementById("demoSubLabel").innerText=d.label;
+const jobEl=document.getElementById("jobDesc"),outEl=document.getElementById("output"),statusEl=document.getElementById("status");
+jobEl.value="";outEl.innerText="Your generated proposal will appear here.";statusEl.innerText="";
+typeInto(jobEl,d.job,14,()=>{
+if(!demoActive)return;
+statusEl.innerText="Generating...";outEl.innerText="";
+demoNextTimer=setTimeout(()=>{
+if(!demoActive)return;
+typeIntoDiv(outEl,d.proposal,10,()=>{
+if(!demoActive)return;
+statusEl.innerText="Proposal ready - try it yourself above";
+demoIndex=(demoIndex+1)%demos.length;
+demoNextTimer=setTimeout(runNextDemo,5500);
+});
+},900);
+});
 }
 function startDemo(){demoActive=true;document.getElementById("demoBar").style.display="flex";buildDemoDots();demoNextTimer=setTimeout(runNextDemo,1800);}
-function stopDemo(){demoActive=false;demoRunning=false;clearInterval(demoTypeTimer);clearTimeout(demoNextTimer);document.getElementById("demoBar").style.display="none";document.getElementById("jobDesc").value="";document.getElementById("output").innerText="Your generated proposal will appear here.";document.getElementById("status").innerText="3 free proposals to test the quality. No card required.";}
+function stopDemo(){
+demoActive=false;demoRunning=false;
+clearInterval(demoTypeTimer);clearTimeout(demoNextTimer);
+document.getElementById("demoBar").style.display="none";
+document.getElementById("jobDesc").value="";
+document.getElementById("output").innerText="Your generated proposal will appear here.";
+document.getElementById("status").innerText="";
+}
 document.getElementById("jobDesc").addEventListener("focus",()=>{if(demoActive)stopDemo();});
 
+function el(id){return document.getElementById(id);}
+
 function checkLoginState(){
-  const email=localStorage.getItem("propai_email");
-  if(email){
-    document.getElementById("loginLink").style.display="none";
-    document.getElementById("signupLink").style.display="none";
-    document.getElementById("heroLogin").style.display="none";
-    document.getElementById("heroSignup").style.display="none";
-    document.getElementById("dashLink").style.display="inline-block";
-    document.getElementById("heroDash").style.display="inline-block";
-    document.getElementById("welcomeBadge").innerText="Welcome back, "+email;
-    document.getElementById("topBanner").style.display="block";
-    trackEvent("returning_user");
-  } else {
-    document.getElementById("loginLink").style.display="inline-block";
-    document.getElementById("signupLink").style.display="inline-block";
-    document.getElementById("heroLogin").style.display="inline-block";
-    document.getElementById("heroSignup").style.display="inline-block";
-    document.getElementById("dashLink").style.display="none";
-    document.getElementById("heroDash").style.display="none";
-    document.getElementById("welcomeBadge").innerText="2 free proposals · No account needed";
-    document.getElementById("topBanner").style.display="none";
-  }
+const email=localStorage.getItem("propai_email");
+if(email){
+el("loginLink").style.display="none";
+el("signupLink").style.display="none";
+el("dashLink").style.display="inline-flex";
+if(el("heroLogin"))el("heroLogin").style.display="none";
+if(el("heroSignup"))el("heroSignup").style.display="none";
+if(el("heroDash"))el("heroDash").style.display="inline-block";
+if(el("welcomeBadge"))el("welcomeBadge").innerText="Welcome back, "+email;
+el("topBanner").style.display="block";
+trackEvent("returning_user");
+} else {
+el("loginLink").style.display="inline-flex";
+el("signupLink").style.display="inline-flex";
+el("dashLink").style.display="none";
+if(el("heroLogin"))el("heroLogin").style.display="inline-block";
+if(el("heroSignup"))el("heroSignup").style.display="inline-block";
+if(el("heroDash"))el("heroDash").style.display="none";
+if(el("welcomeBadge"))el("welcomeBadge").innerText="";
+el("topBanner").style.display="none";
 }
-function checkSuccessBanner(){const params=new URLSearchParams(window.location.search);if(params.get("success")==="1"){document.getElementById("successBanner").style.display="block";history.replaceState(null,"","/");trackEvent("payment_success");}}
+}
+
+function checkSuccessBanner(){const params=new URLSearchParams(window.location.search);if(params.get("success")==="1"){el("successBanner").style.display="block";history.replaceState(null,"","/");trackEvent("payment_success");}}
+
 function checkFreeWarning(){
-  const email=localStorage.getItem("propai_email");
-  if(email)return;
-  const uses=parseInt(localStorage.getItem("propai_free_uses")||"0",10);
-  const remaining=Math.max(0,FREE_LIMIT-uses);
-  updateFreeCounter(remaining);
-  if(uses>0&&remaining<=1&&remaining>0){document.getElementById("warningBanner").style.display="block";}
-  if(uses>=FREE_LIMIT){
-    document.getElementById("paywallTitle").innerText="Your 2 free proposals are up";
-    document.getElementById("paywallSub").innerHTML="Choose a plan to keep generating. Free tier gives you 50 proposals per week.";
-    openPaywall("free_limit_reached");
-  }
+const email=localStorage.getItem("propai_email");
+if(email)return;
+const uses=parseInt(localStorage.getItem("propai_free_uses")||"0",10);
+const remaining=Math.max(0,FREE_LIMIT-uses);
+if(uses>0&&remaining<=1&&remaining>0){el("warningBanner").style.display="block";}
+if(uses>=FREE_LIMIT){
+el("paywallTitle").innerText="Your free proposals are up";
+el("paywallSub").innerHTML="Choose a plan to keep generating.";
+openPaywall("free_limit_reached");
 }
-function updateFreeCounter(remaining){const el=document.getElementById("freeCountNum");const wrapper=document.getElementById("freeCounter");if(!el)return;if(localStorage.getItem("propai_email")){wrapper.style.display="none";return;}el.innerText=remaining;if(remaining===0){wrapper.style.background="#fee2e2";el.style.color="#dc2626";}else if(remaining<=1){wrapper.style.background="#fffbeb";el.style.color="#d97706";}}
+}
+
 function openPaywall(source){
-  document.getElementById("paywallModal").classList.add("open");
-  document.body.style.overflow="hidden";
-  trackEvent("paywall_opened",source||"unknown");
+el("paywallModal").classList.add("open");
+document.body.style.overflow="hidden";
+trackEvent("paywall_opened",source||"unknown");
 }
 function closePaywall(){
-  document.getElementById("paywallModal").classList.remove("open");
-  document.body.style.overflow="";
-  trackEvent("paywall_closed");
+el("paywallModal").classList.remove("open");
+document.body.style.overflow="";
+trackEvent("paywall_closed");
 }
-document.getElementById("paywallModal").addEventListener("click",function(e){
-  if(e.target===this){closePaywall();}
+el("paywallModal").addEventListener("click",function(e){
+if(e.target===this){closePaywall();}
 });
-function updateFreeUses(remaining){if(remaining===null||remaining===undefined)return;const uses=FREE_LIMIT-remaining;localStorage.setItem("propai_free_uses",uses);updateFreeCounter(remaining);if(remaining<=1&&remaining>0){document.getElementById("warningBanner").style.display="block";}if(remaining===0){document.getElementById("warningBanner").style.display="none";document.getElementById("paywallTitle").innerText="Your 2 free proposals are up";document.getElementById("paywallSub").innerHTML="Choose a plan to keep generating. Free tier gives you 50 proposals per week.";openPaywall("free_limit_reached");}}
-function scrollGenerator(){stopDemo();document.getElementById("generator").scrollIntoView({behavior:"smooth"});trackEvent("scroll_to_generator");}
+
+function updateFreeUses(remaining){
+if(remaining===null||remaining===undefined)return;
+const uses=FREE_LIMIT-remaining;
+localStorage.setItem("propai_free_uses",uses);
+if(remaining<=1&&remaining>0){el("warningBanner").style.display="block";}
+if(remaining===0){
+el("warningBanner").style.display="none";
+el("paywallTitle").innerText="Your free proposals are up";
+el("paywallSub").innerHTML="Choose a plan to keep generating.";
+openPaywall("free_limit_reached");
+}
+}
+
+function scrollGenerator(){stopDemo();el("generator").scrollIntoView({behavior:"smooth"});trackEvent("scroll_to_generator");}
+
 async function safeFetchJson(url,opts){try{const res=await fetch(url,opts);const ct=res.headers.get("content-type")||"";if(!ct.includes("application/json")){return{ok:false,status:res.status,data:{error:"Service temporarily unavailable.",code:"NON_JSON_RESPONSE"}};}const data=await res.json();return{ok:res.ok,status:res.status,data};}catch(err){return{ok:false,status:0,data:{error:"Network error. Please check your connection.",code:"NETWORK_ERROR"}};}}
 
 function hasProposal(){
-  const t=document.getElementById("output").innerText;
-  return t && t!=="Your generated proposal will appear here." && t!=="Generating...";
+const t=el("output").innerText;
+return t && t!=="Your generated proposal will appear here." && t!=="Generating...";
 }
 
 async function generateProposal(){
-  const jobDesc=document.getElementById("jobDesc").value.trim();
-  const name=document.getElementById("name").value.trim();
-  const rate=document.getElementById("rate").value.trim();
-  const linkedin=document.getElementById("linkedin").value.trim();
-  const writingSample=document.getElementById("writingSample").value.trim();
-  if(!jobDesc){alert("Please paste a job description.");return;}
-  trackEvent("generate_clicked",writingSample?"with_voice_sample":"no_voice_sample");
-  hideRevisePanel(); hideFollowUp();
-  document.getElementById("output").innerText="Generating...";
-  document.getElementById("status").innerText="";
-  const {status,data}=await safeFetchJson("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"proposal",jobDesc,name,rate,linkedinUrl:linkedin,writingSample,isPaid:false})});
-  if(status===402){document.getElementById("output").innerText="";document.getElementById("status").innerText="Free limit reached.";openPaywall("generate_402");return;}
-  document.getElementById("output").innerText=data.result||data.error||"Something went wrong.";
-  lastProposal=data.result||"";
-  if(data.result){trackEvent("generate_success");}
-  updateFreeUses(data.remaining);
+const jobDesc=el("jobDesc").value.trim();
+const name=el("name").value.trim();
+const rate=el("rate").value.trim();
+const linkedin=el("linkedin").value.trim();
+const writingSample=el("writingSample").value.trim();
+if(!jobDesc){alert("Please paste a job description.");return;}
+trackEvent("generate_clicked",writingSample?"with_voice_sample":"no_voice_sample");
+hideRevisePanel(); hideFollowUp();
+el("output").innerText="Generating...";
+el("status").innerText="";
+const {status,data}=await safeFetchJson("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"proposal",jobDesc,name,rate,linkedinUrl:linkedin,writingSample,isPaid:false})});
+if(status===402){el("output").innerText="";el("status").innerText="Free limit reached.";openPaywall("generate_402");return;}
+el("output").innerText=data.result||data.error||"Something went wrong.";
+lastProposal=data.result||"";
+if(data.result){trackEvent("generate_success");}
+updateFreeUses(data.remaining);
 }
 
 function copyProposal(){
-  if(!lastProposal)return;
-  navigator.clipboard.writeText(lastProposal);
-  alert("Copied.");
-  trackEvent("proposal_copied");
+if(!lastProposal)return;
+navigator.clipboard.writeText(lastProposal);
+alert("Copied.");
+trackEvent("proposal_copied");
 }
 
 /* -- FOLLOW-UP PANEL -- */
 function showFollowUp(){
-  if(!hasProposal())return;
-  hideRevisePanel();
-  document.getElementById("followUpPanel").classList.add("open");
-  document.getElementById("followUpContext").value="";
+if(!hasProposal())return;
+hideRevisePanel();
+el("followUpPanel").classList.add("open");
+el("followUpContext").value="";
 }
-function hideFollowUp(){ document.getElementById("followUpPanel").classList.remove("open"); }
-function selectFollowUpDays(el,days){
-  followUpDays=days;
-  document.querySelectorAll("#followUpPresets .preset-chip").forEach(function(c){c.classList.remove("active");});
-  el.classList.add("active");
+function hideFollowUp(){ el("followUpPanel").classList.remove("open"); }
+function selectFollowUpDays(chip,days){
+followUpDays=days;
+document.querySelectorAll("#followUpPresets .preset-chip").forEach(function(c){c.classList.remove("active");});
+chip.classList.add("active");
 }
 async function runFollowUp(){
-  const proposal=document.getElementById("output").innerText;
-  const context=document.getElementById("followUpContext").value.trim();
-  hideFollowUp();
-  document.getElementById("output").innerText="Generating follow-up...";
-  document.getElementById("status").innerText="";
-  const contextLine=context?"\nAdditional context: "+context:"";
-  const {data}=await safeFetchJson("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"followup",originalProposal:proposal,jobDesc:document.getElementById("jobDesc").value,revisionInstruction:"It has been "+followUpDays+" days since the proposal was sent."+contextLine,isPaid:true})});
-  document.getElementById("output").innerText=data.result||data.error||"Could not generate follow-up.";
-  lastProposal=data.result||lastProposal;
-  trackEvent("followup_generated");
+const proposal=el("output").innerText;
+const context=el("followUpContext").value.trim();
+hideFollowUp();
+el("output").innerText="Generating follow-up...";
+el("status").innerText="";
+const contextLine=context?"\nAdditional context: "+context:"";
+const {data}=await safeFetchJson("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"followup",originalProposal:proposal,jobDesc:el("jobDesc").value,revisionInstruction:"It has been "+followUpDays+" days since the proposal was sent."+contextLine,isPaid:true})});
+el("output").innerText=data.result||data.error||"Could not generate follow-up.";
+lastProposal=data.result||lastProposal;
+trackEvent("followup_generated");
 }
 
 /* -- REVISE PANEL -- */
 function showRevisePanel(){
-  if(!hasProposal())return;
-  hideFollowUp();
-  document.getElementById("revisePanel").classList.add("open");
-  document.getElementById("reviseInstruction").value="";
-  document.querySelectorAll("#revisePresets .preset-chip").forEach(function(c){c.classList.remove("active");});
+if(!hasProposal())return;
+hideFollowUp();
+el("revisePanel").classList.add("open");
+el("reviseInstruction").value="";
+document.querySelectorAll("#revisePresets .preset-chip").forEach(function(c){c.classList.remove("active");});
 }
-function hideRevisePanel(){ document.getElementById("revisePanel").classList.remove("open"); }
-function selectPreset(el,text){
-  document.querySelectorAll("#revisePresets .preset-chip").forEach(function(c){c.classList.remove("active");});
-  el.classList.add("active");
-  document.getElementById("reviseInstruction").value=text;
+function hideRevisePanel(){ el("revisePanel").classList.remove("open"); }
+function selectPreset(chip,text){
+document.querySelectorAll("#revisePresets .preset-chip").forEach(function(c){c.classList.remove("active");});
+chip.classList.add("active");
+el("reviseInstruction").value=text;
 }
 async function runRevise(){
-  const instruction=document.getElementById("reviseInstruction").value.trim();
-  if(!instruction){alert("Please choose a preset or type an instruction.");return;}
-  const proposal=document.getElementById("output").innerText;
-  hideRevisePanel();
-  document.getElementById("output").innerText="Revising...";
-  document.getElementById("status").innerText="";
-  const {data}=await safeFetchJson("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"revision",originalProposal:proposal,revisionInstruction:instruction,isPaid:true})});
-  document.getElementById("output").innerText=data.result||data.error||"Could not revise.";
-  lastProposal=data.result||lastProposal;
-  trackEvent("revise_applied",instruction.slice(0,30));
+const instruction=el("reviseInstruction").value.trim();
+if(!instruction){alert("Please choose a preset or type an instruction.");return;}
+const proposal=el("output").innerText;
+hideRevisePanel();
+el("output").innerText="Revising...";
+el("status").innerText="";
+const {data}=await safeFetchJson("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"revision",originalProposal:proposal,revisionInstruction:instruction,isPaid:true})});
+el("output").innerText=data.result||data.error||"Could not revise.";
+lastProposal=data.result||lastProposal;
+trackEvent("revise_applied",instruction.slice(0,30));
 }
 
 async function buyPlan(plan){
-  trackEvent("buy_clicked",plan);
-  const email=localStorage.getItem("propai_email")||null;
-  const {data}=await safeFetchJson("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({plan,email})});
-  if(data.url){window.location=data.url;}
-  else{alert(data.error||"Could not start checkout. Please try again.");}
-}
-function setUnlimitedPlan(mode){
-  const mBtn=document.getElementById("ulMonthlyBtn");
-  const aBtn=document.getElementById("ulAnnualBtn");
-  const priceEl=document.getElementById("unlimitedPrice");
-  const buy=document.getElementById("ulBuyBtn");
-  if(mode==="annual"){
-    mBtn.classList.remove("active");aBtn.classList.add("active");
-    priceEl.innerHTML='299<span style="font-size:15px;">/year</span>';
-    buy.setAttribute("onclick","buyPlan('unlimited_annual')");
-  }else{
-    aBtn.classList.remove("active");mBtn.classList.add("active");
-    priceEl.innerHTML='35<span style="font-size:15px;">/mo</span>';
-    buy.setAttribute("onclick","buyPlan('unlimited')");
-  }
+trackEvent("buy_clicked",plan);
+const email=localStorage.getItem("propai_email")||null;
+const {data}=await safeFetchJson("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({plan,email})});
+if(data.url){window.location=data.url;}
+else{alert(data.error||"Could not start checkout. Please try again.");}
 }
 
 checkLoginState();
 checkSuccessBanner();
 checkFreeWarning();
 </script>
-
 </body>
 </html>
