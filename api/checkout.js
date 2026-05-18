@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   const { plan, email } = req.body;
 
   const planConfig = {
-    plus:             { price: process.env.STRIPE_PLUS_PRICE || "price_12345", mode: "payment", credits: 100 }
+    plus: { price: process.env.STRIPE_PLUS_PRICE, mode: "subscription" }
   };
 
   const config = planConfig[plan];
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       mode: config.mode,
       success_url: `${DOMAIN}/?success=1&plan=${plan}`,
       cancel_url: `${DOMAIN}/`,
-      metadata: { plan, credits: String(config.credits) },
+      metadata: { plan },
       allow_promotion_codes: true
     };
 
