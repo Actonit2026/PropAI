@@ -212,9 +212,8 @@ footer{ padding:30px; text-align:center; color:#6b7280; margin-top:40px; border-
   <h1>The freelance proposal generator <span>that writes in your voice</span></h1>
   <p>Paste a sample of your writing and PropAI generates proposals in your exact tone, rhythm, and style. No templates, no AI-sounding generic text.</p>
   <div class="hero-actions">
-    <button class="btn btn-primary" onclick="scrollGenerator()">Try it free</button>
+    <button class="btn btn-primary" onclick="scrollGenerator()">Get your first proposal</button>
   </div>
-  <div class="mini-badge" id="welcomeBadge">2 free proposals · No account needed</div>
 </section>
 
 <section class="section" id="generator">
@@ -399,11 +398,8 @@ const COMP_TOTAL=3,COMP_DURATION=7000;
 let compIndex=0,compPaused=false,compPauseTime=null,compProgressStart=null,compProgressRAF=null;
 function buildCompDots(){const c=document.getElementById("compDots");c.innerHTML="";for(let i=0;i<COMP_TOTAL;i++){const d=document.createElement("button");d.className="comp-nav-dot"+(i===0?" active":"");d.onclick=()=>goComp(i);c.appendChild(d);}}
 function compTick(now){if(compPaused)return;const pct=Math.min(100,(now-compProgressStart)/COMP_DURATION*100);document.getElementById("compProgressBar").style.width=pct+"%";if(pct>=100){goComp((compIndex+1)%COMP_TOTAL);return;}compProgressRAF=requestAnimationFrame(compTick);}
-function goComp(i){document.querySelectorAll(".comp-slide").forEach((s,idx)=>s.classList.toggle("active",idx===i));document.querySelectorAll(".comp-nav-dot").forEach((d,idx)=>d.classList.toggle("active",idx===i));compIndex=i;cancelAnimationFrame(compProgressRAF);document.getElementById("compProgressBar").style.width="0%";compProgressStart=performance.now();if(!compPaused)compProgressRAF=requestAnimationFrame(compTick);}
+function goComp(i){document.querySelectorAll(".comp-slide").forEach((s,idx)=>s.classList.toggle("active",idx===i));document.querySelectorAll(".comp-nav-dot").forEach((d,idx)=>d.classList.toggle("active",idx===i));compIndex=i;}
 function moveComp(dir){goComp((compIndex+dir+COMP_TOTAL)%COMP_TOTAL);}
-const compWrap=document.getElementById("compCarouselWrap");
-compWrap.addEventListener("mouseenter",()=>{compPaused=true;compPauseTime=performance.now();cancelAnimationFrame(compProgressRAF);});
-compWrap.addEventListener("mouseleave",()=>{if(compPauseTime!==null){compProgressStart+=performance.now()-compPauseTime;compPauseTime=null;}compPaused=false;compProgressRAF=requestAnimationFrame(compTick);});
 buildCompDots();
 
 const demos=[
