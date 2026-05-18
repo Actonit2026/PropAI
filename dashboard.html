@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard - PropAI</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="/_vercel/insights/script.js"></script>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{ font-family:Arial, sans-serif; background:#f8fafc; color:#111827; display:flex; min-height:100vh; }
+.sidebar{ width:240px; background:#111827; color:white; display:flex; flex-direction:column; position:fixed; top:0; left:0; height:100vh; z-index:50; }
+.sidebar-logo{ padding:24px 20px 20px; font-size:20px; font-weight:700; color:#2563eb; border-bottom:1px solid rgba(255,255,255,0.08); }
+.sidebar-nav{ flex:1; padding:12px 0; }
+.nav-item{ display:flex; align-items:center; gap:12px; padding:12px 20px; cursor:pointer; font-size:14px; color:#94a3b8; transition:0.15s; border:none; background:none; width:100%; text-align:left; }
+.nav-item:hover{ background:rgba(255,255,255,0.06); color:white; }
+.nav-item.active{ background:rgba(37,99,235,0.2); color:#60a5fa; }
+.nav-item .icon{ font-size:16px; width:20px; text-align:center; }
+.sidebar-footer{ padding:16px 20px; border-top:1px solid rgba(255,255,255,0.08); }
+.plan-chip{ background:rgba(37,99,235,0.25); color:#93c5fd; font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px; display:inline-block; margin-bottom:10px; }
+.logout-btn{ font-size:13px; color:#94a3b8; cursor:pointer; border:none; background:none; padding:0; }
+.logout-btn:hover{ color:white; }
+.main{ margin-left:240px; flex:1; min-height:100vh; }
+.topbar{ background:white; border-bottom:1px solid #e5e7eb; padding:16px 28px; display:flex; align-items:center; justify-content:space-between; }
+.topbar-title{ font-size:18px; font-weight:700; }
+.topbar-email{ font-size:13px; color:#6b7280; }
+.content{ padding:28px; max-width:900px; }
+.card{ background:white; border:1px solid #e5e7eb; border-radius:16px; padding:24px; margin-bottom:20px; }
+.card-title{ font-size:15px; font-weight:700; margin-bottom:16px; color:#111827; }
+.stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:20px; }
+.stat{ background:white; border:1px solid #e5e7eb; border-radius:12px; padding:20px; text-align:center; }
+.stat-num{ font-size:32px; font-weight:700; color:#2563eb; }
+.stat-label{ font-size:13px; color:#6b7280; margin-top:4px; }
+.proposal-card{ background:white; border:1px solid #e5e7eb; border-radius:12px; margin-bottom:12px; overflow:hidden; }
+.proposal-header{ padding:16px 20px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; gap:12px; }
+.proposal-header:hover{ background:#f8fafc; }
+.proposal-job{ font-size:14px; font-weight:700; color:#111827; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.proposal-meta{ font-size:12px; color:#9ca3af; white-space:nowrap; flex-shrink:0; }
+.proposal-chevron{ font-size:12px; color:#9ca3af; flex-shrink:0; transition:transform 0.2s; }
+.proposal-chevron.open{ transform:rotate(180deg); }
+.proposal-body{ display:none; border-top:1px solid #f3f4f6; padding:20px; }
+.proposal-body.open{ display:block; }
+.proposal-text{ white-space:pre-wrap; line-height:1.7; font-size:14px; color:#374151; max-height:280px; overflow-y:auto; }
+.proposal-actions{ display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+.btn{ padding:8px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:700; font-size:13px; transition:0.15s; }
+.btn:hover{ opacity:0.88; }
+.btn-primary{ background:#2563eb; color:white; }
+.btn-light{ background:white; border:1px solid #e5e7eb; color:#374151; }
+.btn-danger{ background:#fee2e2; color:#dc2626; }
+.empty-card{ background:linear-gradient(135deg,#eff6ff,#f0fdf4); border:1.5px dashed #bae6fd; border-radius:16px; padding:40px 24px; text-align:center; }
+.empty-icon{ font-size:44px; margin-bottom:14px; }
+.empty-title{ font-size:17px; font-weight:700; color:#111827; margin-bottom:8px; }
+.empty-sub{ font-size:14px; color:#6b7280; line-height:1.6; max-width:340px; margin:0 auto 20px; }
+.settings-group{ margin-bottom:28px; }
+.settings-group-title{ font-size:13px; font-weight:700; color:#374151; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid #f3f4f6; }
+.field{ margin-bottom:16px; }
+.field label{ display:block; font-size:13px; font-weight:700; color:#374151; margin-bottom:6px; }
+.field .hint{ font-size:12px; color:#9ca3af; margin-bottom:6px; display:block; }
+.field input, .field textarea{ width:100%; padding:12px 14px; border:1px solid #e5e7eb; border-radius:10px; font-size:14px; font-family:Arial,sans-serif; }
+.field textarea{ min-height:100px; resize:vertical; }
+.field input:focus, .field textarea:focus{ outline:none; border-color:#2563eb; }
+.save-btn{ background:#2563eb; color:white; border:none; border-radius:10px; padding:12px 24px; font-size:14px; font-weight:700; cursor:pointer; }
+.save-success{ display:none; color:#16a34a; font-size:13px; font-weight:700; margin-left:12px; }
+.plan-info{ background:#eff6ff; border:1px solid #dbeafe; border-radius:12px; padding:18px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.plan-info-left h4{ font-size:15px; font-weight:700; color:#1d4ed8; margin-bottom:2px; }
+.plan-info-left p{ font-size:13px; color:#374151; }
+.danger-zone{ border:1.5px solid #fecaca; border-radius:12px; padding:18px 20px; }
+.danger-zone p{ font-size:13px; color:#6b7280; margin-bottom:14px; }
+.gen-modal-overlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1000; align-items:flex-start; justify-content:center; padding:16px; overflow-y:auto; }
+.gen-modal-overlay.open{ display:flex; }
+.gen-modal-box{ background:white; border-radius:20px; padding:32px; max-width:860px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.18); position:relative; margin:auto; }
+.gen-modal-box h2{ font-size:22px; margin-bottom:4px; }
+.gen-modal-sub{ color:#6b7280; font-size:14px; margin-bottom:20px; }
+.gen-modal-close{ position:absolute; top:16px; right:20px; font-size:22px; cursor:pointer; color:#9ca3af; background:none; border:none; line-height:1; }
+.gen-modal-close:hover{ color:#111827; }
+.gen-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:16px; }
+.gen-card{ background:#f8fafc; border:1px solid #e5e7eb; border-radius:16px; padding:20px; }
+.gen-card h3{ font-size:14px; font-weight:700; margin-bottom:12px; color:#374151; }
+.gen-input{ width:100%; padding:12px; border:1px solid #ddd; border-radius:10px; font-size:14px; margin-bottom:8px; font-family:Arial,sans-serif; }
+textarea.gen-input{ min-height:80px; resize:vertical; }
+textarea.gen-input.tall{ min-height:150px; }
+.gen-output{ white-space:pre-wrap; line-height:1.7; max-height:360px; overflow-y:auto; background:#f8fafc; border:1px solid #e5e7eb; border-radius:10px; padding:16px; font-size:14px; flex:1; }
+.gen-output::-webkit-scrollbar{ width:4px; }
+.gen-output::-webkit-scrollbar-thumb{ background:#e5e7eb; border-radius:4px; }
+.gen-actions{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.gen-status{ margin-top:8px; font-size:13px; color:#6b7280; min-height:18px; }
+.credits-badge{ display:inline-block; background:#eff6ff; border:1px solid #dbeafe; color:#1d4ed8; font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px; margin-left:8px; }
+.credits-badge.low{ background:#fffbeb; border-color:#fde68a; color:#92400e; }
+.credits-badge.empty{ background:#fee2e2; border-color:#fecaca; color:#dc2626; }
+.revise-panel{ display:none; margin-top:12px; background:#f8fafc; border:1px solid #e5e7eb; border-radius:12px; padding:16px; }
+.revise-panel.open{ display:block; }
+.revise-panel-title{ font-size:13px; font-weight:700; color:#374151; margin-bottom:10px; }
+.revise-presets{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:12px; }
+.preset-chip{ padding:6px 13px; border:1px solid #dbeafe; background:#eff6ff; color:#1d4ed8; border-radius:999px; font-size:12px; font-weight:700; cursor:pointer; transition:0.15s; }
+.preset-chip:hover, .preset-chip.active{ background:#2563eb; color:white; border-color:#2563eb; }
+.revise-input{ width:100%; padding:10px 12px; border:1px solid #e5e7eb; border-radius:10px; font-size:14px; font-family:Arial,sans-serif; min-height:60px; resize:vertical; margin-bottom:10px; }
+.revise-input:focus{ outline:none; border-color:#2563eb; }
+.revise-btns{ display:flex; gap:8px; }
+.bottom-tabs{ display:none; position:fixed; bottom:0; left:0; right:0; background:white; border-top:1px solid #e5e7eb; z-index:100; }
+.tab-items{ display:flex; }
+.tab-item{ flex:1; display:flex; flex-direction:column; align-items:center; padding:10px 0 8px; cursor:pointer; border:none; background:none; font-size:11px; color:#9ca3af; gap:4px; transition:0.15s; }
+.tab-item .tab-icon{ font-size:20px; }
+.tab-item.active{ color:#2563eb; }
+@media(max-width:768px){
+  .sidebar{ display:none; }
+  .main{ margin-left:0; padding-bottom:70px; }
+  .bottom-tabs{ display:block; }
+  .stat-row{ grid-template-columns:1fr 1fr; }
+  .topbar{ padding:14px 16px; }
+  .content{ padding:16px; }
+}
+@media(max-width:640px){
+  .gen-modal-box{ padding:20px; border-radius:16px; }
+  .gen-grid{ grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">PropAI</div>
+  <nav class="sidebar-nav">
+    <button class="nav-item active" onclick="showTab('home')" id="nav-home"><span class="icon">&#127968;</span> Home</button>
+    <button class="nav-item" onclick="showTab('proposals')" id="nav-proposals"><span class="icon">&#128196;</span> My Proposals</button>
+    <button class="nav-item" onclick="showTab('settings')" id="nav-settings"><span class="icon">&#9881;</span> Settings</button>
+    <button class="nav-item" onclick="window.location.href='/'"><span class="icon">&#10024;</span> Generate New</button>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="plan-chip" id="sidebarPlan">Free</div>
+    <div style="font-size:13px;color:#94a3b8;margin-bottom:8px;" id="sidebarEmail"></div>
+    <button class="logout-btn" onclick="logout()">Sign out</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">Dashboard</div>
+    <div class="topbar-email" id="topbarEmail"></div>
+  </div>
+  <div class="content">
+
+<div id="tab-home">
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num" id="statCredits">--</div><div class="stat-label">Credits remaining</div></div>
+    <div class="stat"><div class="stat-num" id="statProposals">0</div><div class="stat-label">Proposals generated</div></div>
+    <div class="stat"><div class="stat-num" id="statPlan">Free</div><div class="stat-label">Current plan</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Quick actions</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="openGenModal()">&#10024; Generate a proposal</button>
+      <button class="btn btn-light" onclick="showTab('proposals')">&#128196; My proposals</button>
+      <button class="btn btn-light" onclick="showTab('settings')">&#9881; Settings</button>
+    </div>
+  </div>
+  <div id="recentProposals"></div>
+</div>
+
+<div id="tab-proposals" style="display:none;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <div>
+      <div style="font-size:20px;font-weight:700;">My Proposals</div>
+      <div style="font-size:13px;color:#6b7280;margin-top:2px;">All proposals generated on your account</div>
+    </div>
+    <button class="btn btn-primary" onclick="openGenModal()">&#10024; Generate new</button>
+  </div>
+  <div id="proposalsList"></div>
+</div>
+
+<div id="tab-settings" style="display:none;">
+  <div style="font-size:20px;font-weight:700;margin-bottom:20px;">Settings</div>
+  <div class="card">
+    <div class="settings-group">
+      <div class="settings-group-title">Account</div>
+      <div class="plan-info">
+        <div class="plan-info-left">
+          <h4 id="settingsPlanName">Free plan</h4>
+          <p id="settingsCreditsLeft">-- credits remaining</p>
+        </div>
+        <button class="btn btn-primary" onclick="window.location.href='/'">Upgrade</button>
+      </div>
+    </div>
+    <div class="settings-group">
+      <div class="settings-group-title">Profile defaults</div>
+      <p style="font-size:13px;color:#6b7280;margin-bottom:16px;">These pre-fill the generator so you never retype them.</p>
+      <div class="field"><label>Your name</label><input type="text" id="settingName" placeholder="e.g. Alex Martin"></div>
+      <div class="field"><label>Default rate</label><input type="text" id="settingRate" placeholder="e.g. 75/hr or 1200/project"></div>
+      <div class="field"><label>LinkedIn URL</label><input type="url" id="settingLinkedin" placeholder="https://linkedin.com/in/yourname"></div>
+    </div>
+    <div class="settings-group">
+      <div class="settings-group-title">Writing voice</div>
+      <div class="field">
+        <label>Your writing sample</label>
+        <span class="hint">Saved so PropAI always matches your tone without re-pasting each time.</span>
+        <textarea id="settingVoice" placeholder="Paste a past proposal, email, or bio."></textarea>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;">
+      <button class="save-btn" onclick="saveSettings()">Save changes</button>
+      <span class="save-success" id="saveSuccess">Saved</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="settings-group-title" style="margin-bottom:14px;">Account</div>
+    <div class="danger-zone">
+      <p>Signing out ends your session on this device. Your proposals and settings are saved.</p>
+      <button class="btn btn-danger" onclick="logout()">Sign out</button>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<div class="bottom-tabs">
+  <div class="tab-items">
+    <button class="tab-item active" onclick="showTab('home')" id="tab-btn-home"><span class="tab-icon">&#127968;</span>Home</button>
+    <button class="tab-item" onclick="showTab('proposals')" id="tab-btn-proposals"><span class="tab-icon">&#128196;</span>Proposals</button>
+    <button class="tab-item" onclick="showTab('settings')" id="tab-btn-settings"><span class="tab-icon">&#9881;</span>Settings</button>
+  </div>
+</div>
+
+<!-- GENERATOR MODAL -->
+
+<div class="gen-modal-overlay" id="genModal">
+  <div class="gen-modal-box">
+    <button class="gen-modal-close" onclick="closeGenModal()">x</button>
+    <h2>Generate Proposal <span class="credits-badge" id="genCreditsBadge" style="display:none;"></span></h2>
+    <p class="gen-modal-sub">Uses your saved profile and writing voice from Settings.</p>
+    <div class="gen-grid">
+      <div>
+        <div class="gen-card" style="margin-bottom:16px;">
+          <h3>Job description</h3>
+          <textarea id="genJobDesc" class="gen-input tall" placeholder="Paste the full job description here"></textarea>
+        </div>
+        <div class="gen-card">
+          <h3>Your profile</h3>
+          <input type="text" id="genName" class="gen-input" placeholder="Your name">
+          <input type="text" id="genRate" class="gen-input" placeholder="Your rate (e.g. 75/hr)">
+          <input type="url" id="genLinkedin" class="gen-input" placeholder="LinkedIn URL (optional)">
+          <textarea id="genVoice" class="gen-input" placeholder="Writing sample - past proposal, email, or bio"></textarea>
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:12px;padding:14px;" onclick="runGenerate()">Generate Proposal</button>
+      </div>
+      <div style="display:flex;flex-direction:column;">
+        <div class="gen-card" style="flex:1;display:flex;flex-direction:column;">
+          <h3>Your Proposal</h3>
+          <div class="gen-output" id="genOutput">Your proposal will appear here.</div>
+          <div class="gen-actions">
+            <button class="btn btn-light" onclick="copyGen()">Copy</button>
+            <button class="btn btn-light" onclick="showFollowUp()">Follow-up</button>
+            <button class="btn btn-light" onclick="showRevisePanel()">Revise</button>
+          </div>
+          <div class="gen-status" id="genStatus"></div>
+
+      <!-- FOLLOW-UP PANEL -->
+      <div class="revise-panel" id="followUpPanel">
+        <div class="revise-panel-title">Generate a follow-up message</div>
+        <p style="font-size:12px;color:#6b7280;margin-bottom:10px;">How many days since you sent the proposal?</p>
+        <div class="revise-presets" id="followUpPresets">
+          <span class="preset-chip" onclick="selectFollowUpDays(this, '3')">3 days</span>
+          <span class="preset-chip" onclick="selectFollowUpDays(this, '5')">5 days</span>
+          <span class="preset-chip" onclick="selectFollowUpDays(this, '7')">1 week</span>
+          <span class="preset-chip" onclick="selectFollowUpDays(this, '14')">2 weeks</span>
+        </div>
+        <p style="font-size:12px;color:#6b7280;margin-bottom:6px;">Any context to add? (optional)</p>
+        <textarea id="followUpContext" class="revise-input" placeholder="e.g. I saw the role is still open, or I have a new relevant portfolio piece to share"></textarea>
+        <div class="revise-btns">
+          <button class="btn btn-primary" onclick="runFollowUp()">Generate follow-up</button>
+          <button class="btn btn-light" onclick="hideFollowUp()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- REVISE PANEL -->
+      <div class="revise-panel" id="revisePanel">
+        <div class="revise-panel-title">How should it be revised?</div>
+        <div class="revise-presets" id="revisePresets">
+          <span class="preset-chip" onclick="selectPreset(this, 'Make it shorter, under 120 words')">Shorter</span>
+          <span class="preset-chip" onclick="selectPreset(this, 'Make the tone warmer and more personable')">Warmer tone</span>
+          <span class="preset-chip" onclick="selectPreset(this, 'Make it more direct and confident, cut any hedging language')">More direct</span>
+          <span class="preset-chip" onclick="selectPreset(this, 'Reference more specific details from the job description')">More specific</span>
+          <span class="preset-chip" onclick="selectPreset(this, 'Remove any phrases that sound AI-generated or generic')">Less AI-sounding</span>
+          <span class="preset-chip" onclick="selectPreset(this, 'Add a stronger, clearer call to action at the end')">Stronger CTA</span>
+        </div>
+        <textarea id="reviseInstruction" class="revise-input" placeholder="Or type your own instruction..."></textarea>
+        <div class="revise-btns">
+          <button class="btn btn-primary" onclick="runRevise()">Apply revision</button>
+          <button class="btn btn-light" onclick="hideRevisePanel()">Cancel</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<script>
+const SB = window.supabase.createClient(
+  "https://xogedcqykxdzmllmptks.supabase.co",
+  "sb_publishable_EQN-MT7Rd7ghL0rpSF96Dw_Z7ZAih5U",
+  { auth:{ persistSession:true, autoRefreshToken:true, storageKey:"propai_session" } }
+);
+
+let currentUser = null;
+let allProposals = [];
+let currentCredits = 0;
+let followUpDays = "3";
+
+async function init() {
+  const { data:{ session } } = await SB.auth.getSession();
+  if (!session) { window.location.href = "/login.html"; return; }
+  currentUser = session.user;
+  document.getElementById("topbarEmail").innerText = currentUser.email;
+  document.getElementById("sidebarEmail").innerText = currentUser.email;
+  localStorage.setItem("propai_email", currentUser.email);
+  loadSettings();
+  await loadProfile();
+  await loadProposals();
+
+  SB.auth.onAuthStateChange(function(event) {
+    if (event === "SIGNED_OUT") { localStorage.removeItem("propai_email"); window.location.href = "/login.html"; }
+  });
+}
+
+async function loadProfile() {
+  try {
+    const { data } = await SB.from("profiles").select("credits, plan").eq("id", currentUser.id).single();
+    currentCredits = (data && data.credits !== null && data.credits !== undefined) ? data.credits : 6;
+    const plan = (data && data.plan) || "free";
+    const label = plan.charAt(0).toUpperCase() + plan.slice(1);
+    const display = currentCredits === -1 ? "Unlimited" : String(currentCredits);
+    document.getElementById("statCredits").innerText = display;
+    document.getElementById("statPlan").innerText = label;
+    document.getElementById("sidebarPlan").innerText = label;
+    document.getElementById("settingsPlanName").innerText = label + " plan";
+    document.getElementById("settingsCreditsLeft").innerText = display + " credits remaining";
+    updateBadge(currentCredits);
+  } catch(e) {
+    currentCredits = 6;
+    const display = "6";
+    document.getElementById("statCredits").innerText = display;
+    document.getElementById("statPlan").innerText = "Free";
+    document.getElementById("sidebarPlan").innerText = "Free";
+    document.getElementById("settingsPlanName").innerText = "Free plan";
+    document.getElementById("settingsCreditsLeft").innerText = display + " credits remaining";
+    updateBadge(currentCredits);
+  }
+}
+
+function updateBadge(c) {
+  const b = document.getElementById("genCreditsBadge");
+  if (!b) return;
+  b.style.display = "inline-block";
+  if (c === -1) { b.innerText = "Unlimited"; b.className = "credits-badge"; }
+  else if (c === 0) { b.innerText = "0 credits"; b.className = "credits-badge empty"; }
+  else if (c <= 2) { b.innerText = c + " credits"; b.className = "credits-badge low"; }
+  else { b.innerText = c + " credits"; b.className = "credits-badge"; }
+}
+
+async function loadProposals() {
+  try {
+    const { data } = await SB.from("proposals").select("*").eq("user_id", currentUser.id).order("created_at", { ascending: false });
+    allProposals = data || [];
+  } catch(e) { allProposals = []; }
+  document.getElementById("statProposals").innerText = allProposals.length;
+  renderRecent();
+  renderAll();
+}
+
+function emptyState() {
+  return '<div class="empty-card">' +
+    '<div class="empty-icon">&#128640;</div>' +
+    '<div class="empty-title">Your first proposal is one paste away</div>' +
+    '<div class="empty-sub">Paste a job description, add your writing sample, and PropAI generates in your exact voice in 60 seconds.</div>' +
+    '<button class="btn btn-primary" style="font-size:15px;padding:12px 28px;" onclick="openGenModal()">Generate my first proposal</button>' +
+    '</div>';
+}
+
+function renderRecent() {
+  const el = document.getElementById("recentProposals");
+  if (!allProposals.length) { el.innerHTML = emptyState(); return; }
+  let html = '<div class="card"><div class="card-title">Recent proposals</div>';
+  const recent = allProposals.slice(0, 3);
+  for (let i = 0; i < recent.length; i++) { html += proposalCard(recent[i], i); }
+  if (allProposals.length > 3) {
+    html += '<div style="text-align:center;margin-top:12px;"><button class="btn btn-light" onclick="showTab(\'proposals\')">View all ' + allProposals.length + '</button></div>';
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function renderAll() {
+  const el = document.getElementById("proposalsList");
+  if (!allProposals.length) { el.innerHTML = emptyState(); return; }
+  let html = "";
+  for (let i = 0; i < allProposals.length; i++) { html += proposalCard(allProposals[i], i); }
+  el.innerHTML = html;
+}
+
+function esc(s) {
+  if (!s) return "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function proposalCard(p, i) {
+  const job = esc((p.job_desc || "Untitled").slice(0, 80)) + (p.job_desc && p.job_desc.length > 80 ? "..." : "");
+  const date = p.created_at ? new Date(p.created_at).toLocaleDateString("en-GB", { day:"numeric", month:"short", year:"numeric" }) : "";
+  return '<div class="proposal-card">' +
+    '<div class="proposal-header" onclick="toggleP(' + i + ')">' +
+    '<div class="proposal-job">' + job + '</div>' +
+    '<div class="proposal-meta">' + date + '</div>' +
+    '<div class="proposal-chevron" id="chev-' + i + '">v</div>' +
+    '</div>' +
+    '<div class="proposal-body" id="body-' + i + '">' +
+    '<div class="proposal-text">' + esc(p.proposal || "") + '</div>' +
+    '<div class="proposal-actions">' +
+    '<button class="btn btn-primary" onclick="copyP(' + i + ')">Copy</button>' +
+    '<button class="btn btn-light" onclick="useP(' + i + ')">Generate new from this</button>' +
+    '</div></div></div>';
+}
+
+function toggleP(i) {
+  document.getElementById("body-" + i).classList.toggle("open");
+  document.getElementById("chev-" + i).classList.toggle("open");
+}
+function copyP(i) { navigator.clipboard.writeText(allProposals[i].proposal || ""); alert("Copied."); }
+function useP(i) {
+  openGenModal();
+  document.getElementById("genJobDesc").value = allProposals[i].job_desc || "";
+}
+
+/* -- SETTINGS -- */
+function loadSettings() {
+  document.getElementById("settingName").value     = localStorage.getItem("propai_default_name")     || "";
+  document.getElementById("settingRate").value     = localStorage.getItem("propai_default_rate")     || "";
+  document.getElementById("settingLinkedin").value = localStorage.getItem("propai_default_linkedin") || "";
+  document.getElementById("settingVoice").value    = localStorage.getItem("propai_default_voice")    || "";
+}
+function saveSettings() {
+  localStorage.setItem("propai_default_name",     document.getElementById("settingName").value);
+  localStorage.setItem("propai_default_rate",     document.getElementById("settingRate").value);
+  localStorage.setItem("propai_default_linkedin", document.getElementById("settingLinkedin").value);
+  localStorage.setItem("propai_default_voice",    document.getElementById("settingVoice").value);
+  const s = document.getElementById("saveSuccess");
+  s.style.display = "inline";
+  setTimeout(function() { s.style.display = "none"; }, 2500);
+}
+
+/* -- TABS -- */
+const TABS = ["home","proposals","settings"];
+const TITLES = { home:"Dashboard", proposals:"My Proposals", settings:"Settings" };
+function showTab(name) {
+  for (let i = 0; i < TABS.length; i++) {
+    const t = TABS[i];
+    document.getElementById("tab-" + t).style.display = t === name ? "block" : "none";
+    const n = document.getElementById("nav-" + t); if (n) n.classList.toggle("active", t === name);
+    const b = document.getElementById("tab-btn-" + t); if (b) b.classList.toggle("active", t === name);
+  }
+  document.getElementById("topbarTitle").innerText = TITLES[name] || "Dashboard";
+}
+
+/* -- GENERATOR MODAL -- */
+function openGenModal() {
+  document.getElementById("genModal").classList.add("open");
+  document.body.style.overflow = "hidden";
+  document.getElementById("genOutput").innerText = "Your proposal will appear here.";
+  document.getElementById("genStatus").innerText = "";
+  hideRevisePanel();
+  hideFollowUp();
+  document.getElementById("genName").value     = localStorage.getItem("propai_default_name")     || "";
+  document.getElementById("genRate").value     = localStorage.getItem("propai_default_rate")     || "";
+  document.getElementById("genLinkedin").value = localStorage.getItem("propai_default_linkedin") || "";
+  document.getElementById("genVoice").value    = localStorage.getItem("propai_default_voice")    || "";
+  updateBadge(currentCredits);
+}
+function closeGenModal() {
+  document.getElementById("genModal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.getElementById("genModal").addEventListener("click", function(e) {
+  if (e.target === this) closeGenModal();
+});
+
+function hasProposal() {
+  const t = document.getElementById("genOutput").innerText;
+  return t && t !== "Your proposal will appear here." && t !== "Generating...";
+}
+
+async function callApi(payload) {
+  return fetch("/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+}
+
+async function runGenerate() {
+  const jobDesc = document.getElementById("genJobDesc").value.trim();
+  if (!jobDesc) { alert("Please paste a job description."); return; }
+  if (currentCredits !== -1 && currentCredits <= 0) {
+    document.getElementById("genStatus").innerText = "No credits remaining. Please upgrade.";
+    return;
+  }
+  hideRevisePanel(); hideFollowUp();
+  document.getElementById("genOutput").innerText = "Generating...";
+  document.getElementById("genStatus").innerText = "";
+  try {
+    const res = await callApi({
+      mode: "proposal", isPaid: true,
+      jobDesc: jobDesc,
+      name:          document.getElementById("genName").value.trim(),
+      rate:          document.getElementById("genRate").value.trim(),
+      linkedinUrl:   document.getElementById("genLinkedin").value.trim(),
+      writingSample: document.getElementById("genVoice").value.trim()
+    });
+    const data = await res.json();
+    if (!res.ok) { document.getElementById("genOutput").innerText = data.error || "Generation failed."; return; }
+    document.getElementById("genOutput").innerText = data.result || "Something went wrong.";
+    if (data.result) {
+      await decrementCredit();
+      document.getElementById("genStatus").innerText = currentCredits === -1 ? "Unlimited plan." : currentCredits + " credits remaining.";
+      try {
+        await SB.from("proposals").insert({ user_id: currentUser.id, job_desc: jobDesc, proposal: data.result });
+        await loadProposals();
+      } catch(e) {}
+    }
+  } catch(e) { document.getElementById("genOutput").innerText = "Network error. Please try again."; }
+}
+
+async function decrementCredit() {
+  if (currentCredits === -1) return;
+  if (currentCredits <= 0) return;
+  const newVal = currentCredits - 1;
+  try {
+    await SB.from("profiles").update({ credits: newVal }).eq("id", currentUser.id);
+    currentCredits = newVal;
+    const display = String(newVal);
+    document.getElementById("statCredits").innerText = display;
+    document.getElementById("settingsCreditsLeft").innerText = display + " credits remaining";
+    updateBadge(currentCredits);
+  } catch(e) {}
+}
+
+function copyGen() {
+  if (!hasProposal()) return;
+  navigator.clipboard.writeText(document.getElementById("genOutput").innerText);
+  alert("Copied.");
+}
+
+/* -- FOLLOW-UP PANEL -- */
+function showFollowUp() {
+  if (!hasProposal()) return;
+  hideRevisePanel();
+  document.getElementById("followUpPanel").classList.add("open");
+  document.getElementById("followUpContext").value = "";
+  followUpDays = "3";
+  document.querySelectorAll("#followUpPresets .preset-chip").forEach(function(c) { c.classList.remove("active"); });
+  document.querySelector("#followUpPresets .preset-chip").classList.add("active");
+}
+function hideFollowUp() { document.getElementById("followUpPanel").classList.remove("open"); }
+function selectFollowUpDays(el, days) {
+  followUpDays = days;
+  document.querySelectorAll("#followUpPresets .preset-chip").forEach(function(c) { c.classList.remove("active"); });
+  el.classList.add("active");
+}
+async function runFollowUp() {
+  const proposal = document.getElementById("genOutput").innerText;
+  const context = document.getElementById("followUpContext").value.trim();
+  hideFollowUp();
+  document.getElementById("genOutput").innerText = "Generating follow-up...";
+  document.getElementById("genStatus").innerText = "";
+  const contextLine = context ? "\nAdditional context: " + context : "";
+  try {
+    const res = await callApi({
+      mode: "followup", isPaid: true,
+      originalProposal: proposal,
+      jobDesc: document.getElementById("genJobDesc").value,
+      revisionInstruction: "It has been " + followUpDays + " days since the proposal was sent." + contextLine
+    });
+    const data = await res.json();
+    document.getElementById("genOutput").innerText = data.result || data.error || "Could not generate follow-up.";
+    document.getElementById("genStatus").innerText = "Follow-up generated.";
+  } catch(e) { document.getElementById("genOutput").innerText = "Network error. Please try again."; }
+}
+
+/* -- REVISE PANEL -- */
+function showRevisePanel() {
+  if (!hasProposal()) return;
+  hideFollowUp();
+  document.getElementById("revisePanel").classList.add("open");
+  document.getElementById("reviseInstruction").value = "";
+  document.querySelectorAll("#revisePresets .preset-chip").forEach(function(c) { c.classList.remove("active"); });
+}
+function hideRevisePanel() { document.getElementById("revisePanel").classList.remove("open"); }
+function selectPreset(el, text) {
+  document.querySelectorAll("#revisePresets .preset-chip").forEach(function(c) { c.classList.remove("active"); });
+  el.classList.add("active");
+  document.getElementById("reviseInstruction").value = text;
+}
+async function runRevise() {
+  const instruction = document.getElementById("reviseInstruction").value.trim();
+  if (!instruction) { alert("Please choose a preset or type an instruction."); return; }
+  const proposal = document.getElementById("genOutput").innerText;
+  hideRevisePanel();
+  document.getElementById("genOutput").innerText = "Revising...";
+  document.getElementById("genStatus").innerText = "";
+  try {
+    const res = await callApi({
+      mode: "revision", isPaid: true,
+      originalProposal: proposal,
+      revisionInstruction: instruction
+    });
+    const data = await res.json();
+    document.getElementById("genOutput").innerText = data.result || data.error || "Could not revise.";
+    document.getElementById("genStatus").innerText = "Revised.";
+  } catch(e) { document.getElementById("genOutput").innerText = "Network error. Please try again."; }
+}
+
+async function logout() {
+  await SB.auth.signOut();
+  localStorage.removeItem("propai_email");
+  window.location.href = "/";
+}
+init();
+</script>
+
+</body>
+</html>

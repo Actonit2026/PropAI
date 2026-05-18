@@ -1,0 +1,12 @@
+{
+  "name": "prop-ai",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check:api": "node scripts/check-api.mjs",
+    "vercel-build": "node scripts/check-api.mjs"
+  },
+  "dependencies": {
+    "stripe": "^18.0.0"
+  }
+}

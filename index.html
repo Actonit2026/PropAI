@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PropAI - Freelance Proposal Generator That Matches Your Voice</title>
+<meta name="description" content="PropAI is a freelance proposal generator that matches your exact writing voice. Paste a writing sample, get a job-winning proposal in 60 seconds. Free to try.">
+<meta name="google-site-verification" content="edkwspiNqxidJr1Ck7XPy_LoM-0sc3b7W1zVKHNhZv0" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wnu1bp2ige");
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{ font-family:Arial, sans-serif; background:#f8fafc; color:#111827; }
+nav{ height:72px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; background:white; border-bottom:1px solid #e5e7eb; position:sticky; top:0; z-index:100; }
+.logo{ font-size:22px; font-weight:700; color:#2563eb; }
+.nav-right{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.btn{ padding:10px 18px; border:none; border-radius:8px; cursor:pointer; font-weight:700; font-size:14px; transition:0.2s ease; }
+.btn:hover{ transform:translateY(-1px); opacity:0.95; }
+.btn-primary{ background:#2563eb; color:white; }
+.btn-light{ background:white; border:1px solid #ddd; color:#111827; }
+.btn-success{ background:#16a34a; color:white; }
+.hero{ max-width:1100px; margin:auto; padding:90px 20px; text-align:center; }
+.hero h1{ font-size:58px; line-height:1.05; max-width:900px; margin:auto; }
+.hero h1 span{ color:#2563eb; }
+.hero p{ font-size:21px; color:#6b7280; max-width:760px; margin:24px auto 0; line-height:1.6; }
+.hero-icp{ display:inline-block; margin-top:16px; font-size:14px; font-weight:700; color:#374151; background:#f3f4f6; border-radius:999px; padding:6px 16px; }
+.hero-actions{ margin-top:28px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+.mini-badge{ display:inline-block; margin-top:18px; padding:8px 12px; background:#eff6ff; border:1px solid #dbeafe; color:#1d4ed8; border-radius:999px; font-size:14px; font-weight:700; }
+.founder-note{ margin-top:18px; font-size:13px; color:#6b7280; max-width:560px; margin-left:auto; margin-right:auto; line-height:1.6; }
+.free-counter{ display:inline-block; margin-top:10px; font-size:13px; font-weight:700; color:#374151; background:#f3f4f6; border-radius:999px; padding:5px 14px; }
+.free-counter span{ color:#2563eb; }
+.feature-strip{ display:flex; justify-content:center; gap:32px; flex-wrap:wrap; max-width:860px; margin:28px auto 0; }
+.feature-pill{ display:flex; align-items:center; gap:7px; font-size:13px; font-weight:700; color:#374151; }
+.feature-pill span{ color:#16a34a; font-size:15px; }
+.section{ max-width:1100px; margin:auto; padding:20px; }
+.grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.card{ background:white; border:1px solid #e5e7eb; border-radius:16px; padding:24px; }
+.card h2{ margin-bottom:18px; }
+textarea,input{ width:100%; padding:14px; border:1px solid #ddd; border-radius:10px; margin-top:10px; font-size:15px; }
+textarea{ min-height:180px; resize:vertical; }
+.full{ width:100%; margin-top:16px; }
+.output{ white-space:pre-wrap; line-height:1.7; height:340px; overflow-y:auto; padding-right:4px; }
+.output::-webkit-scrollbar{ width:4px; }
+.output::-webkit-scrollbar-track{ background:transparent; }
+.output::-webkit-scrollbar-thumb{ background:#e5e7eb; border-radius:4px; }
+.actions{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+.status{ margin-top:12px; font-size:14px; color:#6b7280; }
+.warning-banner{ display:none; background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:12px 16px; margin-top:14px; font-size:14px; color:#92400e; }
+.warning-banner a{ color:#2563eb; cursor:pointer; text-decoration:underline; }
+.voice-field{ margin-top:14px; }
+.voice-label{ font-size:13px; font-weight:700; color:#374151; margin-top:12px; display:block; }
+.voice-hint{ font-size:12px; color:#6b7280; margin-top:4px; display:block; line-height:1.5; }
+.success-banner{ background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:14px 18px; color:#166534; font-size:15px; font-weight:600; display:none; max-width:1100px; margin:0 auto 20px; }
+.modal-overlay{
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.55); z-index:1000;
+  align-items:flex-start; justify-content:center;
+  padding:16px; overflow-y:auto;
+}
+.modal-overlay.open{ display:flex; }
+.modal-box{
+  background:white; border-radius:20px;
+  padding:36px 32px; max-width:680px; width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,0.18);
+  position:relative; margin:auto;
+}
+.modal-box h2{ text-align:center; font-size:24px; margin-bottom:6px; }
+.modal-box .modal-sub{ text-align:center; color:#6b7280; font-size:15px; margin-bottom:28px; }
+.modal-close{ position:absolute; top:16px; right:20px; font-size:22px; cursor:pointer; color:#9ca3af; background:none; border:none; line-height:1; }
+.modal-close:hover{ color:#111827; }
+.modal-plans{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.modal-plan{ border:1px solid #e5e7eb; border-radius:14px; padding:20px 16px; text-align:center; }
+.modal-plan.best{ border:2px solid #2563eb; background:#eff6ff; }
+.modal-plan .mp-name{ font-weight:700; font-size:15px; }
+.modal-plan .mp-price{ font-size:32px; font-weight:700; margin:8px 0 2px; }
+.modal-plan .mp-credits{ font-size:13px; color:#374151; font-weight:600; margin-bottom:6px; }
+.modal-plan .mp-desc{ font-size:12px; color:#6b7280; margin-bottom:14px; line-height:1.5; }
+.plan-toggle{ display:inline-flex; background:#f3f4f6; border-radius:999px; padding:3px; margin:12px auto 4px; font-size:13px; }
+.plan-toggle button{ border:none; background:transparent; padding:6px 14px; border-radius:999px; cursor:pointer; font-weight:700; color:#6b7280; font-size:13px; }
+.plan-toggle button.active{ background:white; color:#2563eb; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.plan-save{ color:#16a34a; font-size:11px; font-weight:700; margin-left:4px; }
+.founder-section{ max-width:680px; margin:60px auto 20px; padding:32px 24px; background:white; border:1px solid #e5e7eb; border-radius:16px; text-align:left; }
+.founder-section h3{ font-size:18px; margin-bottom:10px; }
+.founder-section p{ font-size:15px; color:#374151; line-height:1.7; margin-bottom:8px; }
+.founder-section .signoff{ font-size:14px; color:#6b7280; font-style:italic; }
+footer{ padding:30px; text-align:center; color:#6b7280; margin-top:40px; border-top:1px solid #e5e7eb; }
+.ltd-banner{ background:linear-gradient(90deg,#1d4ed8,#7c3aed); color:white; text-align:center; padding:10px 20px; font-size:14px; font-weight:700; letter-spacing:0.2px; }
+.ltd-banner code{ background:rgba(255,255,255,0.2); border-radius:4px; padding:2px 8px; margin:0 4px; font-size:13px; letter-spacing:0.5px; font-family:ui-monospace,monospace; }
+.demo-bar{ display:flex; align-items:center; justify-content:space-between; background:#eff6ff; border:1px solid #dbeafe; border-radius:10px; padding:10px 16px; margin-bottom:14px; font-size:13px; }
+.demo-bar-left{ display:flex; align-items:center; gap:8px; }
+.demo-dot{ width:8px; height:8px; border-radius:50%; background:#2563eb; animation:pulse 1.4s infinite; }
+@keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
+.demo-label{ font-weight:700; color:#1d4ed8; }
+.demo-sub{ color:#6b7280; }
+.demo-dots{ display:flex; gap:5px; }
+.demo-dot-nav{ width:7px; height:7px; border-radius:50%; background:#cbd5e1; cursor:pointer; transition:background 0.2s; }
+.demo-dot-nav.active{ background:#2563eb; }
+.demo-stop{ font-size:12px; font-weight:700; color:#6b7280; cursor:pointer; border:1px solid #e5e7eb; border-radius:6px; padding:4px 10px; background:white; }
+.demo-stop:hover{ color:#111827; border-color:#aaa; }
+.comparison{ max-width:1100px; margin:0 auto; padding:0 20px 60px; }
+.comparison-header{ text-align:center; margin-bottom:36px; }
+.comparison-header h2{ font-size:40px; line-height:1.1; margin-bottom:12px; }
+.comparison-header p{ font-size:18px; color:#6b7280; max-width:600px; margin:auto; }
+.comp-carousel-wrap{ background:white; border:1px solid #e5e7eb; border-radius:20px; padding:28px; }
+.comp-job-tag{ display:inline-block; background:#f3f4f6; border:1px solid #e5e7eb; border-radius:8px; padding:7px 14px; font-size:13px; font-weight:700; color:#374151; margin-bottom:20px; }
+.comp-slide{ display:none; animation:fadeSlide 0.35s ease; }
+.comp-slide.active{ display:block; }
+@keyframes fadeSlide{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
+.comp-cards{ display:grid; grid-template-columns:1fr 48px 1fr; align-items:start; }
+.comp-card{ border-radius:12px; padding:18px; }
+.comp-card.generic{ background:#fff5f5; border:1.5px solid #fecaca; }
+.comp-card.propai{ background:#f0f9ff; border:1.5px solid #bae6fd; }
+.comp-card-label{ font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.comp-card.generic .comp-card-label{ color:#dc2626; }
+.comp-card.propai .comp-card-label{ color:#0369a1; }
+.comp-card-text{ font-size:13.5px; line-height:1.7; color:#374151; margin-bottom:12px; }
+.comp-tags{ display:flex; flex-wrap:wrap; gap:5px; }
+.tag-bad{ background:#fee2e2; color:#b91c1c; font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; }
+.tag-good{ background:#dcfce7; color:#15803d; font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; }
+.vs-col{ display:flex; align-items:center; justify-content:center; padding-top:50px; }
+.vs-pill{ background:#111827; color:white; font-size:11px; font-weight:700; border-radius:999px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.comp-nav{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:24px; }
+.comp-nav-btn{ background:white; border:1.5px solid #e5e7eb; border-radius:50%; width:38px; height:38px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:0.2s; flex-shrink:0; }
+.comp-nav-btn:hover{ border-color:#2563eb; color:#2563eb; }
+.comp-nav-dots{ display:flex; gap:7px; }
+.comp-nav-dot{ width:8px; height:8px; border-radius:50%; background:#cbd5e1; cursor:pointer; transition:background 0.2s; border:none; padding:0; }
+.comp-nav-dot.active{ background:#2563eb; }
+.comp-progress{ height:3px; background:#e5e7eb; border-radius:999px; margin-top:20px; overflow:hidden; }
+.comp-progress-bar{ height:100%; background:#2563eb; border-radius:999px; width:0%; }
+.how-it-works{ max-width:1100px; margin:0 auto; padding:0 20px 60px; }
+.how-header{ text-align:center; margin-bottom:48px; }
+.how-header h2{ font-size:40px; line-height:1.1; margin-bottom:12px; }
+.how-header p{ font-size:18px; color:#6b7280; max-width:580px; margin:auto; }
+.how-header .how-sub{ display:inline-block; margin-top:12px; font-size:13px; font-weight:700; color:#dc2626; background:#fee2e2; border-radius:999px; padding:5px 14px; }
+.steps{ display:grid; grid-template-columns:1fr 32px 1fr 32px 1fr; align-items:start; gap:0; }
+.step{ background:white; border:1px solid #e5e7eb; border-radius:16px; padding:28px; }
+.step-num{ width:36px; height:36px; background:#2563eb; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; margin-bottom:16px; }
+.step h3{ font-size:16px; font-weight:700; margin-bottom:8px; color:#111827; }
+.step p{ font-size:13px; color:#6b7280; line-height:1.6; }
+.step-arrow{ display:flex; align-items:center; justify-content:center; padding-top:60px; font-size:22px; color:#cbd5e1; }
+.dimensions{ display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:14px; }
+.dimension{ background:#eff6ff; border-radius:8px; padding:7px 10px; font-size:11px; font-weight:700; color:#1d4ed8; line-height:1.3; }
+.how-cta{ text-align:center; margin-top:40px; }
+.revise-panel{ display:none; background:#f8fafc; border:1px solid #e5e7eb; border-radius:12px; padding:16px; margin-top:14px; }
+.revise-panel.open{ display:block; }
+.revise-panel-title{ font-size:13px; font-weight:700; color:#374151; margin-bottom:10px; }
+.revise-presets{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:12px; }
+.preset-chip{ padding:6px 13px; border:1px solid #dbeafe; background:#eff6ff; color:#1d4ed8; border-radius:999px; font-size:12px; font-weight:700; cursor:pointer; transition:0.15s; }
+.preset-chip:hover, .preset-chip.active{ background:#2563eb; color:white; border-color:#2563eb; }
+.revise-instruction{ width:100%; padding:10px 12px; border:1px solid #e5e7eb; border-radius:10px; font-size:14px; font-family:Arial,sans-serif; min-height:60px; resize:vertical; margin-bottom:10px; margin-top:0; }
+.revise-instruction:focus{ outline:none; border-color:#2563eb; }
+.revise-btns{ display:flex; gap:8px; }
+@media(max-width:960px){
+  .grid{ grid-template-columns:1fr; }
+  .hero h1{ font-size:42px; }
+  nav{ height:auto; padding:16px; align-items:flex-start; gap:12px; flex-direction:column; }
+  .comp-cards{ grid-template-columns:1fr; gap:12px; }
+  .vs-col{ padding-top:0; }
+  .comparison-header h2{ font-size:28px; }
+  .feature-strip{ gap:16px; }
+  .steps{ grid-template-columns:1fr; gap:16px; }
+  .step-arrow{ padding-top:0; font-size:18px; transform:rotate(90deg); }
+  .how-header h2{ font-size:28px; }
+}
+@media(max-width:600px){
+  .modal-plans{ grid-template-columns:1fr; }
+  .modal-box{ padding:24px 16px; border-radius:16px; }
+  .modal-close{ top:12px; right:14px; font-size:20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="ltd-banner" id="topBanner" style="display:none;">
+  Launch week — use code <code>LAUNCH50</code> for 50% off Pro · first 20 customers only
+</div>
+
+<nav>
+  <div class="logo">PropAI</div>
+  <div class="nav-right" id="navActions">
+    <a href="/login.html?tab=login" id="loginLink"><button class="btn btn-light">Log in</button></a>
+    <a href="/login.html" id="signupLink"><button class="btn btn-success">Sign up free</button></a>
+    <a href="/dashboard.html" id="dashLink" style="display:none;"><button class="btn btn-success">Dashboard</button></a>
+    <button class="btn btn-primary" onclick="openPaywall('nav_upgrade')">Upgrade</button>
+  </div>
+</nav>
+
+<div class="success-banner" id="successBanner">Payment successful! Your credits have been added. <a href="/login.html?tab=login">Login to your dashboard</a> to access all features.</div>
+
+<div class="modal-overlay" id="paywallModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closePaywall()">x</button>
+    <h2 id="paywallTitle">Unlock unlimited proposals</h2>
+    <p class="modal-sub" id="paywallSub">Credits never expire. Pro is 50% off this week with code <strong>LAUNCH50</strong>.</p>
+    <div class="modal-plans">
+      <div class="modal-plan"><div class="mp-name">Starter</div><div class="mp-price">9</div><div class="mp-credits">10 Credits</div><div class="mp-desc">Quick top-up. Credits never expire. Best for occasional applications.</div><button class="btn btn-primary full" onclick="buyPlan('starter')">Buy Starter</button></div>
+      <div class="modal-plan"><div class="mp-name">Pro</div><div class="mp-price">24</div><div class="mp-credits">50 Credits</div><div class="mp-desc">Tone control, platform targeting, revision mode, follow-up generator.</div><button class="btn btn-primary full" onclick="buyPlan('pro')">Buy Pro</button></div>
+      <div class="modal-plan best"><div class="mp-name">Unlimited</div><div class="mp-price" id="unlimitedPrice">35<span style="font-size:15px;">/mo</span></div><div class="mp-credits">Unlimited proposals</div><div class="mp-desc">For active freelancers. Apply to every job, every day. Cancel anytime.</div>
+      <div class="plan-toggle"><button class="active" id="ulMonthlyBtn" onclick="setUnlimitedPlan('monthly')">Monthly</button><button id="ulAnnualBtn" onclick="setUnlimitedPlan('annual')">Annual<span class="plan-save">-29%</span></button></div>
+      <button class="btn btn-primary full" id="ulBuyBtn" onclick="buyPlan('unlimited')" style="margin-top:10px;">Buy Unlimited</button></div>
+    </div>
+    <p style="text-align:center;margin-top:18px;font-size:13px;color:#6b7280;">30-day money-back guarantee. No questions asked.</p>
+  </div>
+</div>
+
+<section class="hero">
+  <h1>The freelance proposal generator <span>that writes in your voice, not a template</span></h1>
+  <p>Built for freelancers who apply daily. Paste a sample of your own writing and PropAI generates your next pitch in your exact voice, matching your tone, rhythm, and style. Works on Upwork, Fiverr, LinkedIn, cold email, anywhere.</p>
+  <div class="hero-icp">Built for freelancers · Works on any platform · No Chrome extension</div>
+  <div class="hero-actions">
+    <button class="btn btn-primary" onclick="scrollGenerator()">Generate Free Proposal</button>
+    <a href="/login.html?tab=login" id="heroLogin"><button class="btn btn-light">Log in</button></a>
+    <a href="/login.html" id="heroSignup"><button class="btn btn-success">Sign up free</button></a>
+    <a href="/dashboard.html" id="heroDash" style="display:none;"><button class="btn btn-success">Members Dashboard</button></a>
+  </div>
+  <div class="feature-strip">
+    <div class="feature-pill"><span>✓</span> Matches your exact writing voice</div>
+    <div class="feature-pill"><span>✓</span> No Chrome extension required</div>
+    <div class="feature-pill"><span>✓</span> No recycled templates</div>
+    <div class="feature-pill"><span>✓</span> Any freelance platform</div>
+  </div>
+  <div class="mini-badge" id="welcomeBadge">3 free proposals · No account needed · No credit card</div>
+  <div class="founder-note">
+    Every proposal is a fresh AI call primed with your writing sample. No templates underneath.<br>
+    <strong style="color:#16a34a;">Sign up free — get 6 proposals instead of 3, history saved forever.</strong>
+  </div>
+  <div class="free-counter" id="freeCounter"><span id="freeCountNum">3</span> free proposals remaining</div>
+</section>
+
+<section class="comparison">
+  <div class="comparison-header">
+    <h2>Why generic AI proposals <span style="color:#dc2626;">lose</span> jobs</h2>
+    <p>Same job post. Same brief. See why clients pick one and ignore the other.</p>
+  </div>
+  <div class="comp-carousel-wrap" id="compCarouselWrap">
+    <div class="comp-slide active">
+      <div class="comp-job-tag">Upwork · React developer for B2B SaaS dashboard · $2,500-4,000</div>
+      <div class="comp-cards">
+        <div class="comp-card generic"><div class="comp-card-label">Generic AI proposal</div><div class="comp-card-text">"Hello! I'm excited to apply for your React developer position. I have extensive experience with React, Next.js, Supabase, and Stripe and I'm confident I can deliver a high-quality dashboard that meets all your requirements. I always deliver on time and within budget and pride myself on clear communication. Please check out my portfolio and let me know if you'd like to discuss further. Looking forward to working with you!"</div><div class="comp-tags"><span class="tag-bad">Generic opener</span><span class="tag-bad">No specifics from the brief</span><span class="tag-bad">Anyone could send this</span></div></div>
+        <div class="vs-col"><div class="vs-pill">VS</div></div>
+        <div class="comp-card propai"><div class="comp-card-label">PropAI (with your writing sample)</div><div class="comp-card-text">"Figma designs already ready is a green light. No discovery phase needed, I can start building immediately. Four Next.js + Supabase dashboards shipped this year, so role management and real-time charts are straightforward. Stripe billing portal is usually where projects stall (webhook edge cases), so I'd tackle that in week 1. Realistic timeline: 18 working days. Happy to do a paid 2-day sprint on the auth layer first so you can see my code quality before committing."</div><div class="comp-tags"><span class="tag-good">References the actual brief</span><span class="tag-good">Sounds like a real person</span><span class="tag-good">Clear next step</span></div></div>
+      </div>
+    </div>
+    <div class="comp-slide">
+      <div class="comp-job-tag">Fiverr · Email copywriter for SaaS onboarding sequence · 12% to 20%+ conversion goal</div>
+      <div class="comp-cards">
+        <div class="comp-card generic"><div class="comp-card-label">Generic AI proposal</div><div class="comp-card-text">"Hi there! I would love to help with your email onboarding sequence. As an experienced copywriter with a passion for compelling content, I have written numerous email sequences for various clients across many industries. I understand the importance of reducing churn and increasing conversions. I will craft engaging, personalized emails that resonate with your audience and drive them toward upgrading. Please feel free to reach out if you have any questions!"</div><div class="comp-tags"><span class="tag-bad">"Passion for compelling content"</span><span class="tag-bad">Ignores the 12% to 20% goal</span><span class="tag-bad">Zero SaaS knowledge shown</span></div></div>
+        <div class="vs-col"><div class="vs-pill">VS</div></div>
+        <div class="comp-card propai"><div class="comp-card-label">PropAI (with your writing sample)</div><div class="comp-card-text">"12% to 20%+ is very doable. The gap is almost always email 2 or 3: you're still pitching features instead of the user's first win. I'd audit your current sequence first (30-min call), then rebuild around your activation metric. For a project management tool, that's the moment a user adds their first team member. Six emails, each with one job to do. Delivery: 7 days. I can show you 3 sequences I've written for similar SaaS tools."</div><div class="comp-tags"><span class="tag-good">Addresses the exact metric</span><span class="tag-good">Shows real expertise</span><span class="tag-good">Proposes a concrete process</span></div></div>
+      </div>
+    </div>
+    <div class="comp-slide">
+      <div class="comp-job-tag">Direct outreach · Social media manager for organic skincare brand · $800/mo</div>
+      <div class="comp-cards">
+        <div class="comp-card generic"><div class="comp-card-label">Generic AI proposal</div><div class="comp-card-text">"Hello! I am a passionate social media manager with years of experience managing Instagram and TikTok accounts for various brands. I create engaging content that resonates with target audiences and drives growth. I am well-versed in organic beauty brands and understand the importance of authentic storytelling. I am reliable, creative, and always meet deadlines. I would love to bring my expertise to your brand and help you grow your online presence!"</div><div class="comp-tags"><span class="tag-bad">"Passionate" opener</span><span class="tag-bad">No content strategy shown</span><span class="tag-bad">Could be sent to 100 clients</span></div></div>
+        <div class="vs-col"><div class="vs-pill">VS</div></div>
+        <div class="comp-card propai"><div class="comp-card-label">PropAI (with your writing sample)</div><div class="comp-card-text">"Organic skincare on TikTok is a sweet spot right now. The algorithm heavily favors authentic founder-led content over polished brand posts. Two educational posts per week (ingredient spotlights, routines), one UGC repost, daily stories. Short founder POVs are outperforming aesthetic product shots in this space by 3-4x. Can I see your current top 5 posts? I want to know what's already resonating before proposing a content calendar."</div><div class="comp-tags"><span class="tag-good">Specific to their niche</span><span class="tag-good">Actual content strategy</span><span class="tag-good">Asks a smart question</span></div></div>
+      </div>
+    </div>
+    <div class="comp-nav">
+      <button class="comp-nav-btn" onclick="moveComp(-1)">&#8592;</button>
+      <div class="comp-nav-dots" id="compDots"></div>
+      <button class="comp-nav-btn" onclick="moveComp(1)">&#8594;</button>
+    </div>
+    <div class="comp-progress"><div class="comp-progress-bar" id="compProgressBar"></div></div>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <div class="how-header">
+    <h2>How the voice matching actually works</h2>
+    <p>Not a tone slider. Not a template. A forensic analysis of how you write, applied to every proposal.</p>
+    <div class="how-sub">This is what makes it different from ChatGPT</div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Paste your writing sample</h3>
+      <p>A past proposal, an email, a bio: anything you've written that felt natural. Even one paragraph is enough. This is the input no other tool asks for.</p>
+    </div>
+    <div class="step-arrow">&#8594;</div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>PropAI extracts your stylistic fingerprint</h3>
+      <p>Before writing a single word, the AI identifies 8 specific dimensions of how you write:</p>
+      <div class="dimensions">
+        <div class="dimension">Sentence rhythm</div>
+        <div class="dimension">Use of contractions</div>
+        <div class="dimension">Formality register</div>
+        <div class="dimension">Punctuation habits</div>
+        <div class="dimension">How you open</div>
+        <div class="dimension">Vocabulary level</div>
+        <div class="dimension">Energy &amp; warmth</div>
+        <div class="dimension">First-person style</div>
+      </div>
+    </div>
+    <div class="step-arrow">&#8594;</div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Your proposal, written in your voice</h3>
+      <p>The output mirrors all 8 patterns exactly. The result should be indistinguishable from something you wrote yourself: not "professional-sounding AI", but you.</p>
+    </div>
+  </div>
+  <div class="how-cta">
+    <button class="btn btn-primary" style="font-size:16px;padding:14px 32px;" onclick="scrollGenerator()">Try it free - see the difference</button>
+  </div>
+</section>
+
+<section class="section" id="generator">
+  <div class="grid">
+    <div class="card">
+      <h2>Generate Proposal</h2>
+      <div class="demo-bar" id="demoBar">
+        <div class="demo-bar-left">
+          <div class="demo-dot"></div>
+          <span class="demo-label">Live demo</span>
+          <span class="demo-sub" id="demoSubLabel">watching PropAI work in real time</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="demo-dots" id="demoDots"></div>
+          <button class="demo-stop" onclick="stopDemo()">Try it yourself</button>
+        </div>
+      </div>
+      <textarea id="jobDesc" placeholder="Paste job description here..."></textarea>
+      <input id="name" placeholder="Your name (optional)">
+      <input id="rate" placeholder="Your rate e.g 75/hr">
+      <input id="linkedin" placeholder="LinkedIn URL (optional)">
+      <div class="voice-field">
+        <label class="voice-label">Your writing sample - the secret ingredient</label>
+        <span class="voice-hint">Paste a past proposal, email, or bio. PropAI matches your tone, sentence length, and personality, making the output sound like you, not a template.</span>
+        <textarea id="writingSample" placeholder="e.g. a paragraph from a past proposal you were happy with, or just how you'd describe yourself in an email." style="min-height:80px;"></textarea>
+      </div>
+      <button class="btn btn-primary full" onclick="generateProposal()">Generate Proposal</button>
+      <div class="warning-banner" id="warningBanner">Last free proposal - <a onclick="openPaywall('free_limit_warning')">grab a plan to keep generating</a></div>
+      <div class="status" id="status">3 free proposals to test the quality. No card required.</div>
+    </div>
+    <div class="card">
+      <h2>Your Proposal</h2>
+      <div class="output" id="output">Your generated proposal will appear here.</div>
+      <div class="actions">
+        <button class="btn btn-light" onclick="copyProposal()">Copy</button>
+        <button class="btn btn-light" onclick="showFollowUp()">Follow-up</button>
+        <button class="btn btn-light" onclick="showRevisePanel()">Revise</button>
+      </div>
+
+  <!-- FOLLOW-UP PANEL -->
+  <div class="revise-panel" id="followUpPanel">
+    <div class="revise-panel-title">Generate a follow-up message</div>
+    <p style="font-size:12px;color:#6b7280;margin-bottom:10px;">How many days since you sent the proposal?</p>
+    <div class="revise-presets" id="followUpPresets">
+      <span class="preset-chip active" onclick="selectFollowUpDays(this,'3')">3 days</span>
+      <span class="preset-chip" onclick="selectFollowUpDays(this,'5')">5 days</span>
+      <span class="preset-chip" onclick="selectFollowUpDays(this,'7')">1 week</span>
+      <span class="preset-chip" onclick="selectFollowUpDays(this,'14')">2 weeks</span>
+    </div>
+    <p style="font-size:12px;color:#6b7280;margin-bottom:6px;">Any context to add? (optional)</p>
+    <textarea id="followUpContext" class="revise-instruction" placeholder="e.g. I saw the role is still open, or I have a new relevant portfolio piece to share"></textarea>
+    <div class="revise-btns">
+      <button class="btn btn-primary" onclick="runFollowUp()">Generate follow-up</button>
+      <button class="btn btn-light" onclick="hideFollowUp()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- REVISE PANEL -->
+  <div class="revise-panel" id="revisePanel">
+    <div class="revise-panel-title">How should it be revised?</div>
+    <div class="revise-presets" id="revisePresets">
+      <span class="preset-chip" onclick="selectPreset(this,'Make it shorter, under 120 words')">Shorter</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Make the tone warmer and more personable')">Warmer tone</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Make it more direct and confident, cut any hedging language')">More direct</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Reference more specific details from the job description')">More specific</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Remove any phrases that sound AI-generated or generic')">Less AI-sounding</span>
+      <span class="preset-chip" onclick="selectPreset(this,'Add a stronger, clearer call to action at the end')">Stronger CTA</span>
+    </div>
+    <textarea id="reviseInstruction" class="revise-instruction" placeholder="Or type your own instruction..."></textarea>
+    <div class="revise-btns">
+      <button class="btn btn-primary" onclick="runRevise()">Apply revision</button>
+      <button class="btn btn-light" onclick="hideRevisePanel()">Cancel</button>
+    </div>
+  </div>
+
+</div>
+
+  </div>
+</section>
+
+<section class="founder-section">
+  <h3>A note from the builder</h3>
+  <p>I'm a solo developer building PropAI in public. The product is brand new — that means you're early. All feedback is welcome.</p>
+  <p>Every generation is a fresh call to a top-tier language model, primed with your writing sample. There are no templates underneath. That's the whole pitch.</p>
+  <p class="signoff">Built solo from Belgium</p>
+</section>
+
+<footer>2026 PropAI · ActOnIT · <a href="/login.html?tab=login" style="color:#6b7280;">Login</a> · <a href="#" onclick="openPaywall('footer_pricing');return false;" style="color:#6b7280;">Pricing</a></footer>
+
+<script>
+const FREE_LIMIT=3;let lastProposal="";let followUpDays="3";
+
+function trackEvent(name,data){
+  try{
+    if(typeof clarity==="function"){
+      if(data){clarity("set",name,String(data));}
+      else{clarity("event",name);}
+    }
+  }catch(e){}
+}
+
+const COMP_TOTAL=3,COMP_DURATION=7000;
+let compIndex=0,compPaused=false,compPauseTime=null,compProgressStart=null,compProgressRAF=null;
+function buildCompDots(){const c=document.getElementById("compDots");c.innerHTML="";for(let i=0;i<COMP_TOTAL;i++){const d=document.createElement("button");d.className="comp-nav-dot"+(i===0?" active":"");d.onclick=()=>goComp(i);c.appendChild(d);}}
+function compTick(now){if(compPaused)return;const pct=Math.min(100,(now-compProgressStart)/COMP_DURATION*100);document.getElementById("compProgressBar").style.width=pct+"%";if(pct>=100){goComp((compIndex+1)%COMP_TOTAL);return;}compProgressRAF=requestAnimationFrame(compTick);}
+function goComp(i){document.querySelectorAll(".comp-slide").forEach((s,idx)=>s.classList.toggle("active",idx===i));document.querySelectorAll(".comp-nav-dot").forEach((d,idx)=>d.classList.toggle("active",idx===i));compIndex=i;cancelAnimationFrame(compProgressRAF);document.getElementById("compProgressBar").style.width="0%";compProgressStart=performance.now();if(!compPaused)compProgressRAF=requestAnimationFrame(compTick);}
+function moveComp(dir){goComp((compIndex+dir+COMP_TOTAL)%COMP_TOTAL);}
+const compWrap=document.getElementById("compCarouselWrap");
+compWrap.addEventListener("mouseenter",()=>{compPaused=true;compPauseTime=performance.now();cancelAnimationFrame(compProgressRAF);});
+compWrap.addEventListener("mouseleave",()=>{if(compPauseTime!==null){compProgressStart+=performance.now()-compPauseTime;compPauseTime=null;}compPaused=false;compProgressRAF=requestAnimationFrame(compTick);});
+buildCompDots();compProgressStart=performance.now();compProgressRAF=requestAnimationFrame(compTick);
+
+const demos=[
+  {label:"React dev · SaaS dashboard",job:"Looking for a React developer to build an analytics dashboard for our B2B SaaS. Needs real-time charts (Chart.js), user role management, and Stripe billing portal integration. Stack is Next.js + Supabase. Figma designs are ready. Budget $2,500-4,000. Need to start ASAP, ~3 weeks timeline.",proposal:"Figma designs already ready is a green light. No discovery phase needed, I can start building immediately. Four Next.js + Supabase dashboards shipped this year, so role management and real-time charts are straightforward. Stripe billing portal is usually where projects stall (webhook edge cases), so I'd tackle that in week 1 while it's still easy to test. Realistic timeline: 18 working days. Happy to do a paid 2-day sprint on the auth layer first so you can see my code quality before committing to the full scope."},
+  {label:"Copywriter · SaaS email sequence",job:"B2B SaaS (project management tool) looking for a copywriter to write a 6-email onboarding sequence. Goal is to reduce churn in the first 30 days. Current sequence converts at 12% to paid, want to hit 20%+. Need someone who understands SaaS, not just generic email writing. Budget: $600-900.",proposal:"12% to 20%+ is very doable. The gap is almost always email 2 or 3: you're still pitching features instead of the user's first win. I'd audit your current sequence first (30-min call), then rebuild around your activation metric. For a project management tool, that's the moment a user adds their first team member or completes their first task. Six emails, each with one job to do. Delivery: 7 days. I can show you 3 sequences I've written for similar SaaS tools."},
+  {label:"Python dev · e-commerce scraper",job:"Need a Python developer to scrape product listings from 3 e-commerce sites (including pagination and dynamic JS content). Store results in PostgreSQL. Must handle anti-bot measures. Deliverable: clean script + documentation. Budget: $300-500. Quick turnaround needed (3-5 days).",proposal:"Dynamic JS content plus anti-bot means Playwright, not Scrapy. I've been burned by that assumption before so I always scope it correctly upfront. Three sites with pagination: 3 days for the scrapers plus 1 day for PostgreSQL schema and ingestion pipeline. Retry logic and rotating user agents included as standard. One question: does this need to run on a schedule, or is it a one-time data pull? That changes the architecture slightly and might affect the price."},
+  {label:"Logo designer · wellness brand",job:"Looking for a logo designer for a new wellness & mindfulness brand targeting professional women 30-45. Think calm, premium, modern, not overly feminine. Inspired by brands like Headspace and Calm. Deliverables: primary logo + icon + color palette. Budget: $250-400.",proposal:"Headspace and Calm both use rounded, airy letterforms with a lot of white space. Good reference points. For professional women 30-45, I'd push toward a wordmark rather than an icon-first logo (more credible at small sizes on packaging). Three directions: one typographic, one with a subtle abstract mark, one more literal. Deliverables: primary SVG, favicon, HEX/RGB palette, 1-page brand guide. Quick question: is this for a digital product, physical product, or both? It affects how I approach the color palette for print vs screen."},
+  {label:"Social media manager · skincare brand",job:"We run a Shopify store selling organic skincare. Looking for a social media manager to handle Instagram + TikTok. 3 posts/week + stories + engagement. You'll work closely with our founder. Must have experience with organic beauty brands. Budget: $800/month.",proposal:"Organic skincare on TikTok is a sweet spot right now. The algorithm heavily favors authentic founder-led content over polished brand posts. Two educational posts per week (ingredient spotlights, routines), one UGC repost, daily stories. Short founder POVs are outperforming aesthetic product shots in this space by 3-4x. Can I see your current top 5 posts? I want to know what's already resonating before I propose a content calendar."},
+  {label:"Content writer · personal finance blog",job:"Need a content writer for our personal finance blog. 4 articles/month, 1,500-2,000 words each. Topics: budgeting, investing for beginners, credit scores. Must be SEO-savvy (we use Surfer SEO). US audience. No fluff, we want actionable advice. Budget: $80-120/article.",proposal:"SEO-first personal finance is exactly my lane. I've written 60+ articles for finance blogs using Surfer, and the biggest mistake I see is targeting head terms instead of question-based long-tails where a DA under 40 site can actually rank. Before I pitch topics, can you share your Surfer workspace or target keyword list? That way I'm writing to gaps in your current cluster, not just adjacent topics. Rate is $100/article for 1,500-word pieces, $115 for 2,000+. First article at standard rate, no risk."}
+];
+let demoActive=false,demoIndex=0,demoTypeTimer=null,demoNextTimer=null,demoRunning=false;
+function buildDemoDots(){const c=document.getElementById("demoDots");c.innerHTML="";demos.forEach((_,i)=>{const d=document.createElement("div");d.className="demo-dot-nav"+(i===0?" active":"");d.onclick=()=>{demoIndex=i;if(demoRunning){clearTimeout(demoNextTimer);clearInterval(demoTypeTimer);runNextDemo();}};c.appendChild(d);});}
+function updateDemoDots(i){document.querySelectorAll(".demo-dot-nav").forEach((d,idx)=>d.classList.toggle("active",idx===i));}
+function typeInto(el,text,speed,onDone){let i=0;el.value="";demoTypeTimer=setInterval(()=>{if(!demoActive||i>=text.length){clearInterval(demoTypeTimer);if(onDone)onDone();return;}el.value+=text[i++];el.scrollTop=el.scrollHeight;},speed);}
+function typeIntoDiv(el,text,speed,onDone){let i=0;el.innerText="";demoTypeTimer=setInterval(()=>{if(!demoActive||i>=text.length){clearInterval(demoTypeTimer);if(onDone)onDone();return;}el.innerText+=text[i++];el.scrollTop=el.scrollHeight;},speed);}
+function runNextDemo(){
+  if(!demoActive)return;demoRunning=true;
+  const d=demos[demoIndex%demos.length];
+  updateDemoDots(demoIndex%demos.length);
+  document.getElementById("demoSubLabel").innerText=d.label;
+  const jobEl=document.getElementById("jobDesc"),outEl=document.getElementById("output"),statusEl=document.getElementById("status");
+  jobEl.value="";outEl.innerText="Your generated proposal will appear here.";statusEl.innerText="";
+  typeInto(jobEl,d.job,14,()=>{
+    if(!demoActive)return;
+    statusEl.innerText="Generating...";outEl.innerText="";
+    demoNextTimer=setTimeout(()=>{
+      if(!demoActive)return;
+      typeIntoDiv(outEl,d.proposal,10,()=>{
+        if(!demoActive)return;
+        statusEl.innerText="Proposal ready - try it yourself above";
+        demoIndex=(demoIndex+1)%demos.length;
+        demoNextTimer=setTimeout(runNextDemo,5500);
+      });
+    },900);
+  });
+}
+function startDemo(){demoActive=true;document.getElementById("demoBar").style.display="flex";buildDemoDots();demoNextTimer=setTimeout(runNextDemo,1800);}
+function stopDemo(){demoActive=false;demoRunning=false;clearInterval(demoTypeTimer);clearTimeout(demoNextTimer);document.getElementById("demoBar").style.display="none";document.getElementById("jobDesc").value="";document.getElementById("output").innerText="Your generated proposal will appear here.";document.getElementById("status").innerText="3 free proposals to test the quality. No card required.";}
+document.getElementById("jobDesc").addEventListener("focus",()=>{if(demoActive)stopDemo();});
+
+function checkLoginState(){
+  const email=localStorage.getItem("propai_email");
+  if(email){
+    document.getElementById("loginLink").style.display="none";
+    document.getElementById("signupLink").style.display="none";
+    document.getElementById("heroLogin").style.display="none";
+    document.getElementById("heroSignup").style.display="none";
+    document.getElementById("dashLink").style.display="inline-block";
+    document.getElementById("heroDash").style.display="inline-block";
+    document.getElementById("welcomeBadge").innerText="Welcome back, "+email;
+    document.getElementById("topBanner").style.display="block";
+    trackEvent("returning_user");
+  } else {
+    document.getElementById("loginLink").style.display="inline-block";
+    document.getElementById("signupLink").style.display="inline-block";
+    document.getElementById("heroLogin").style.display="inline-block";
+    document.getElementById("heroSignup").style.display="inline-block";
+    document.getElementById("dashLink").style.display="none";
+    document.getElementById("heroDash").style.display="none";
+    document.getElementById("welcomeBadge").innerText="3 free proposals · No account needed · No credit card";
+    document.getElementById("topBanner").style.display="none";
+  }
+}
+function checkSuccessBanner(){const params=new URLSearchParams(window.location.search);if(params.get("success")==="1"){document.getElementById("successBanner").style.display="block";history.replaceState(null,"","/");trackEvent("payment_success");}}
+function checkFreeWarning(){
+  const email=localStorage.getItem("propai_email");
+  if(email)return;
+  const uses=parseInt(localStorage.getItem("propai_free_uses")||"0",10);
+  const remaining=Math.max(0,FREE_LIMIT-uses);
+  updateFreeCounter(remaining);
+  if(uses>0&&remaining<=1&&remaining>0){document.getElementById("warningBanner").style.display="block";}
+  if(uses>=FREE_LIMIT){
+    document.getElementById("paywallTitle").innerText="Your 3 free proposals are up";
+    document.getElementById("paywallSub").innerHTML="Pick a plan to keep generating — credits never expire, and Pro is 50% off with code <strong>LAUNCH50</strong>.";
+    openPaywall("free_limit_reached");
+  }
+}
+function updateFreeCounter(remaining){const el=document.getElementById("freeCountNum");const wrapper=document.getElementById("freeCounter");if(!el)return;if(localStorage.getItem("propai_email")){wrapper.style.display="none";return;}el.innerText=remaining;if(remaining===0){wrapper.style.background="#fee2e2";el.style.color="#dc2626";}else if(remaining<=1){wrapper.style.background="#fffbeb";el.style.color="#d97706";}}
+function openPaywall(source){
+  document.getElementById("paywallModal").classList.add("open");
+  document.body.style.overflow="hidden";
+  trackEvent("paywall_opened",source||"unknown");
+}
+function closePaywall(){
+  document.getElementById("paywallModal").classList.remove("open");
+  document.body.style.overflow="";
+  trackEvent("paywall_closed");
+}
+document.getElementById("paywallModal").addEventListener("click",function(e){
+  if(e.target===this){closePaywall();}
+});
+function updateFreeUses(remaining){if(remaining===null||remaining===undefined)return;const uses=FREE_LIMIT-remaining;localStorage.setItem("propai_free_uses",uses);updateFreeCounter(remaining);if(remaining<=1&&remaining>0){document.getElementById("warningBanner").style.display="block";}if(remaining===0){document.getElementById("warningBanner").style.display="none";document.getElementById("paywallTitle").innerText="Your 3 free proposals are up";document.getElementById("paywallSub").innerHTML="Pick a plan to keep generating — credits never expire, and Pro is 50% off with code <strong>LAUNCH50</strong>.";openPaywall("free_limit_reached");}}
+function scrollGenerator(){stopDemo();document.getElementById("generator").scrollIntoView({behavior:"smooth"});trackEvent("scroll_to_generator");}
+async function safeFetchJson(url,opts){try{const res=await fetch(url,opts);const ct=res.headers.get("content-type")||"";if(!ct.includes("application/json")){return{ok:false,status:res.status,data:{error:"Service temporarily unavailable.",code:"NON_JSON_RESPONSE"}};}const data=await res.json();return{ok:res.ok,status:res.status,data};}catch(err){return{ok:false,status:0,data:{error:"Network error. Please check your connection.",code:"NETWORK_ERROR"}};}}
+
+function hasProposal(){
+  const t=document.getElementById("output").innerText;
+  return t && t!=="Your generated proposal will appear here." && t!=="Generating...";
+}
+
+async function generateProposal(){
+  const jobDesc=document.getElementById("jobDesc").value.trim();
+  const name=document.getElementById("name").value.trim();
+  const rate=document.getElementById("rate").value.trim();
+  const linkedin=document.getElementById("linkedin").value.trim();
+  const writingSample=document.getElementById("writingSample").value.trim();
+  if(!jobDesc){alert("Please paste a job description.");return;}
+  trackEvent("generate_clicked",writingSample?"with_voice_sample":"no_voice_sample");
+  hideRevisePanel(); hideFollowUp();
+  document.getElementById("output").innerText="Generating...";
+  document.getElementById("status").innerText="";
+  const {status,data}=await safeFetchJson("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"proposal",jobDesc,name,rate,linkedinUrl:linkedin,writingSample,isPaid:false})});
+  if(status===402){document.getElementById("output").innerText="";document.getElementById("status").innerText="Free limit reached.";openPaywall("generate_402");return;}
+  document.getElementById("output").innerText=data.result||data.error||"Something went wrong.";
+  lastProposal=data.result||"";
+  if(data.result){trackEvent("generate_success");}
+  updateFreeUses(data.remaining);
+}
+
+function copyProposal(){
+  if(!lastProposal)return;
+  navigator.clipboard.writeText(lastProposal);
+  alert("Copied.");
+  trackEvent("proposal_copied");
+}
+
+/* -- FOLLOW-UP PANEL -- */
+function showFollowUp(){
+  if(!hasProposal())return;
+  hideRevisePanel();
+  document.getElementById("followUpPanel").classList.add("open");
+  document.getElementById("followUpContext").value="";
+}
+function hideFollowUp(){ document.getElementById("followUpPanel").classList.remove("open"); }
+function selectFollowUpDays(el,days){
+  followUpDays=days;
+  document.querySelectorAll("#followUpPresets .preset-chip").forEach(function(c){c.classList.remove("active");});
+  el.classList.add("active");
+}
+async function runFollowUp(){
+  const proposal=document.getElementById("output").innerText;
+  const context=document.getElementById("followUpContext").value.trim();
+  hideFollowUp();
+  document.getElementById("output").innerText="Generating follow-up...";
+  document.getElementById("status").innerText="";
+  const contextLine=context?"\nAdditional context: "+context:"";
+  const {data}=await safeFetchJson("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"followup",originalProposal:proposal,jobDesc:document.getElementById("jobDesc").value,revisionInstruction:"It has been "+followUpDays+" days since the proposal was sent."+contextLine,isPaid:true})});
+  document.getElementById("output").innerText=data.result||data.error||"Could not generate follow-up.";
+  lastProposal=data.result||lastProposal;
+  trackEvent("followup_generated");
+}
+
+/* -- REVISE PANEL -- */
+function showRevisePanel(){
+  if(!hasProposal())return;
+  hideFollowUp();
+  document.getElementById("revisePanel").classList.add("open");
+  document.getElementById("reviseInstruction").value="";
+  document.querySelectorAll("#revisePresets .preset-chip").forEach(function(c){c.classList.remove("active");});
+}
+function hideRevisePanel(){ document.getElementById("revisePanel").classList.remove("open"); }
+function selectPreset(el,text){
+  document.querySelectorAll("#revisePresets .preset-chip").forEach(function(c){c.classList.remove("active");});
+  el.classList.add("active");
+  document.getElementById("reviseInstruction").value=text;
+}
+async function runRevise(){
+  const instruction=document.getElementById("reviseInstruction").value.trim();
+  if(!instruction){alert("Please choose a preset or type an instruction.");return;}
+  const proposal=document.getElementById("output").innerText;
+  hideRevisePanel();
+  document.getElementById("output").innerText="Revising...";
+  document.getElementById("status").innerText="";
+  const {data}=await safeFetchJson("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({mode:"revision",originalProposal:proposal,revisionInstruction:instruction,isPaid:true})});
+  document.getElementById("output").innerText=data.result||data.error||"Could not revise.";
+  lastProposal=data.result||lastProposal;
+  trackEvent("revise_applied",instruction.slice(0,30));
+}
+
+async function buyPlan(plan){
+  trackEvent("buy_clicked",plan);
+  const email=localStorage.getItem("propai_email")||null;
+  const {data}=await safeFetchJson("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({plan,email})});
+  if(data.url){window.location=data.url;}
+  else{alert(data.error||"Could not start checkout. Please try again.");}
+}
+function setUnlimitedPlan(mode){
+  const mBtn=document.getElementById("ulMonthlyBtn");
+  const aBtn=document.getElementById("ulAnnualBtn");
+  const priceEl=document.getElementById("unlimitedPrice");
+  const buy=document.getElementById("ulBuyBtn");
+  if(mode==="annual"){
+    mBtn.classList.remove("active");aBtn.classList.add("active");
+    priceEl.innerHTML='299<span style="font-size:15px;">/year</span>';
+    buy.setAttribute("onclick","buyPlan('unlimited_annual')");
+  }else{
+    aBtn.classList.remove("active");mBtn.classList.add("active");
+    priceEl.innerHTML='35<span style="font-size:15px;">/mo</span>';
+    buy.setAttribute("onclick","buyPlan('unlimited')");
+  }
+}
+
+checkLoginState();
+checkSuccessBanner();
+checkFreeWarning();
+startDemo();
+</script>
+
+</body>
+</html>
