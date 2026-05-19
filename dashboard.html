@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -85,9 +84,9 @@ textarea.gen-input.tall{ min-height:150px; }
 .gen-output::-webkit-scrollbar-thumb{ background:#e5e7eb; border-radius:4px; }
 .gen-actions{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
 .gen-status{ margin-top:8px; font-size:13px; color:#6b7280; min-height:18px; }
-.credits-badge{ display:inline-block; background:#eff6ff; border:1px solid #dbeafe; color:#1d4ed8; font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px; margin-left:8px; }
-.credits-badge.low{ background:#fffbeb; border-color:#fde68a; color:#92400e; }
-.credits-badge.empty{ background:#fee2e2; border-color:#fecaca; color:#dc2626; }
+.proposals-badge{ display:inline-block; background:#eff6ff; border:1px solid #dbeafe; color:#1d4ed8; font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px; margin-left:8px; }
+.proposals-badge.low{ background:#fffbeb; border-color:#fde68a; color:#92400e; }
+.proposals-badge.empty{ background:#fee2e2; border-color:#fecaca; color:#dc2626; }
 .revise-panel{ display:none; margin-top:12px; background:#f8fafc; border:1px solid #e5e7eb; border-radius:12px; padding:16px; }
 .revise-panel.open{ display:block; }
 .revise-panel-title{ font-size:13px; font-weight:700; color:#374151; margin-bottom:10px; }
@@ -142,8 +141,8 @@ textarea.gen-input.tall{ min-height:150px; }
 
 <div id="tab-home">
   <div class="stat-row">
-    <div class="stat"><div class="stat-num" id="statCredits">--</div><div class="stat-label">Credits remaining</div></div>
-    <div class="stat"><div class="stat-num" id="statProposals">0</div><div class="stat-label">Proposals generated</div></div>
+    <div class="stat"><div class="stat-num" id="statCredits">--</div><div class="stat-label">Proposals this week</div></div>
+    <div class="stat"><div class="stat-num" id="statProposals">0</div><div class="stat-label">Total proposals generated</div></div>
     <div class="stat"><div class="stat-num" id="statPlan">Free</div><div class="stat-label">Current plan</div></div>
   </div>
   <div class="card">
@@ -176,9 +175,9 @@ textarea.gen-input.tall{ min-height:150px; }
       <div class="plan-info">
         <div class="plan-info-left">
           <h4 id="settingsPlanName">Free plan</h4>
-          <p id="settingsCreditsLeft">50 proposals/week</p>
+          <p id="settingsProposalsLeft">50 proposals/week</p>
         </div>
-        <button class="btn btn-primary" onclick="window.location.href='/'">Upgrade to Plus</button>
+        <button class="btn btn-primary" id="upgradeBtn" onclick="window.location.href='/'">Upgrade to Plus</button>
       </div>
     </div>
     <div class="settings-group">
@@ -222,11 +221,10 @@ textarea.gen-input.tall{ min-height:150px; }
 </div>
 
 <!-- GENERATOR MODAL -->
-
 <div class="gen-modal-overlay" id="genModal">
   <div class="gen-modal-box">
     <button class="gen-modal-close" onclick="closeGenModal()">x</button>
-    <h2>Generate Proposal <span class="credits-badge" id="genCreditsBadge" style="display:none;"></span></h2>
+    <h2>Generate Proposal <span class="proposals-badge" id="genProposalsBadge" style="display:none;"></span></h2>
     <p class="gen-modal-sub">Uses your saved profile and writing voice from Settings.</p>
     <div class="gen-grid">
       <div>
@@ -306,8 +304,11 @@ const SB = window.supabase.createClient(
 
 let currentUser = null;
 let allProposals = [];
-let currentCredits = 0;
+let currentProposals = 0; // proposals remaining this week
+let currentPlan = "free";
 let followUpDays = "3";
+
+const PLAN_LIMITS = { free: 50, plus: 100 };
 
 async function init() {
   const { data:{ session } } = await SB.auth.getSession();
@@ -328,36 +329,54 @@ async function init() {
 async function loadProfile() {
   try {
     const { data } = await SB.from("profiles").select("credits, plan").eq("id", currentUser.id).single();
-    currentCredits = (data && data.credits !== null && data.credits !== undefined) ? data.credits : 6;
-    const plan = (data && data.plan) || "free";
-    const label = plan.charAt(0).toUpperCase() + plan.slice(1);
-    const display = currentCredits === -1 ? "Unlimited" : String(currentCredits);
+    currentPlan = (data && data.plan) || "free";
+    const limit = PLAN_LIMITS[currentPlan] || 50;
+
+    // Migrate stale credits from old system (old default was 6)
+    let credits = (data && data.credits !== null && data.credits !== undefined) ? data.credits : limit;
+    if (credits < 10 && credits >= 0) {
+      // Looks like old credits data — reset to plan limit
+      credits = limit;
+      SB.from("profiles").update({ credits: limit }).eq("id", currentUser.id).then(() => {});
+    }
+    currentProposals = credits;
+
+    const label = currentPlan.charAt(0).toUpperCase() + currentPlan.slice(1);
+    const display = currentProposals === -1 ? "Unlimited" : String(currentProposals);
+
     document.getElementById("statCredits").innerText = display;
     document.getElementById("statPlan").innerText = label;
     document.getElementById("sidebarPlan").innerText = label;
     document.getElementById("settingsPlanName").innerText = label + " plan";
-    document.getElementById("settingsCreditsLeft").innerText = display + " credits remaining";
-    updateBadge(currentCredits);
+    document.getElementById("settingsProposalsLeft").innerText = display + " proposals remaining this week";
+
+    // Hide upgrade button for plus users
+    if (currentPlan === "plus") {
+      const upgradeBtn = document.getElementById("upgradeBtn");
+      if (upgradeBtn) upgradeBtn.style.display = "none";
+    }
+
+    updateBadge(currentProposals);
   } catch(e) {
-    currentCredits = 6;
-    const display = "6";
-    document.getElementById("statCredits").innerText = display;
+    currentProposals = 50;
+    currentPlan = "free";
+    document.getElementById("statCredits").innerText = "50";
     document.getElementById("statPlan").innerText = "Free";
     document.getElementById("sidebarPlan").innerText = "Free";
     document.getElementById("settingsPlanName").innerText = "Free plan";
-    document.getElementById("settingsCreditsLeft").innerText = display + " credits remaining";
-    updateBadge(currentCredits);
+    document.getElementById("settingsProposalsLeft").innerText = "50 proposals remaining this week";
+    updateBadge(50);
   }
 }
 
 function updateBadge(c) {
-  const b = document.getElementById("genCreditsBadge");
+  const b = document.getElementById("genProposalsBadge");
   if (!b) return;
   b.style.display = "inline-block";
-  if (c === -1) { b.innerText = "Unlimited"; b.className = "credits-badge"; }
-  else if (c === 0) { b.innerText = "0 credits"; b.className = "credits-badge empty"; }
-  else if (c <= 2) { b.innerText = c + " credits"; b.className = "credits-badge low"; }
-  else { b.innerText = c + " credits"; b.className = "credits-badge"; }
+  if (c === -1) { b.innerText = "Unlimited"; b.className = "proposals-badge"; }
+  else if (c === 0) { b.innerText = "0 proposals left"; b.className = "proposals-badge empty"; }
+  else if (c <= 5) { b.innerText = c + " proposals left"; b.className = "proposals-badge low"; }
+  else { b.innerText = c + " proposals left"; b.className = "proposals-badge"; }
 }
 
 async function loadProposals() {
@@ -474,7 +493,7 @@ function openGenModal() {
   document.getElementById("genRate").value     = localStorage.getItem("propai_default_rate")     || "";
   document.getElementById("genLinkedin").value = localStorage.getItem("propai_default_linkedin") || "";
   document.getElementById("genVoice").value    = localStorage.getItem("propai_default_voice")    || "";
-  updateBadge(currentCredits);
+  updateBadge(currentProposals);
 }
 function closeGenModal() {
   document.getElementById("genModal").classList.remove("open");
@@ -500,8 +519,8 @@ async function callApi(payload) {
 async function runGenerate() {
   const jobDesc = document.getElementById("genJobDesc").value.trim();
   if (!jobDesc) { alert("Please paste a job description."); return; }
-  if (currentCredits !== -1 && currentCredits <= 0) {
-    document.getElementById("genStatus").innerText = "No credits remaining. Please upgrade.";
+  if (currentProposals !== -1 && currentProposals <= 0) {
+    document.getElementById("genStatus").innerText = "No proposals remaining this week. " + (currentPlan === "free" ? "Upgrade to Plus for 100/week." : "Resets next week.");
     return;
   }
   hideRevisePanel(); hideFollowUp();
@@ -520,8 +539,9 @@ async function runGenerate() {
     if (!res.ok) { document.getElementById("genOutput").innerText = data.error || "Generation failed."; return; }
     document.getElementById("genOutput").innerText = data.result || "Something went wrong.";
     if (data.result) {
-      await decrementCredit();
-      document.getElementById("genStatus").innerText = currentCredits === -1 ? "Unlimited plan." : currentCredits + " credits remaining.";
+      await decrementProposal();
+      const remaining = currentProposals === -1 ? "Unlimited" : currentProposals + " proposals remaining this week.";
+      document.getElementById("genStatus").innerText = remaining;
       try {
         await SB.from("proposals").insert({ user_id: currentUser.id, job_desc: jobDesc, proposal: data.result });
         await loadProposals();
@@ -530,17 +550,16 @@ async function runGenerate() {
   } catch(e) { document.getElementById("genOutput").innerText = "Network error. Please try again."; }
 }
 
-async function decrementCredit() {
-  if (currentCredits === -1) return;
-  if (currentCredits <= 0) return;
-  const newVal = currentCredits - 1;
+async function decrementProposal() {
+  if (currentProposals === -1) return;
+  if (currentProposals <= 0) return;
+  const newVal = currentProposals - 1;
   try {
     await SB.from("profiles").update({ credits: newVal }).eq("id", currentUser.id);
-    currentCredits = newVal;
-    const display = String(newVal);
-    document.getElementById("statCredits").innerText = display;
-    document.getElementById("settingsCreditsLeft").innerText = display + " credits remaining";
-    updateBadge(currentCredits);
+    currentProposals = newVal;
+    document.getElementById("statCredits").innerText = String(newVal);
+    document.getElementById("settingsProposalsLeft").innerText = newVal + " proposals remaining this week";
+    updateBadge(currentProposals);
   } catch(e) {}
 }
 
