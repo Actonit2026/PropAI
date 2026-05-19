@@ -1,6 +1,6 @@
 export const config = { runtime: "edge" };
 
-const FREE_LIMIT = 2;
+const FREE_LIMIT = 50; // 50 proposals per week for free users
 
 function sanitize(str) {
   if (!str || typeof str !== "string") return "";
@@ -25,7 +25,8 @@ async function kvIncrUses(key) {
     });
     const data = await res.json();
     if (data.result === 1) {
-      fetch(`${process.env.KV_REST_API_URL}/expire/${encodeURIComponent(key)}/86400`, {
+      // Expire after 7 days (weekly reset)
+      fetch(`${process.env.KV_REST_API_URL}/expire/${encodeURIComponent(key)}/604800`, {
         method: "POST",
         headers: { Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}` }
       });
